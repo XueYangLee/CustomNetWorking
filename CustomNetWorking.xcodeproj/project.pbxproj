@@ -7,21 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6CAA7D78A8C3CE857E1495EB /* libPods-CustomNetWorking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */; };
 		F19DBF1924A5A1E800DC83E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */; };
-		F19DBF1C24A5A1E800DC83E7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF1B24A5A1E800DC83E7 /* SceneDelegate.m */; };
 		F19DBF1F24A5A1E800DC83E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF1E24A5A1E800DC83E7 /* ViewController.m */; };
 		F19DBF2224A5A1E800DC83E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F19DBF2024A5A1E800DC83E7 /* Main.storyboard */; };
 		F19DBF2424A5A1E900DC83E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F19DBF2324A5A1E900DC83E7 /* Assets.xcassets */; };
 		F19DBF2724A5A1E900DC83E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F19DBF2524A5A1E900DC83E7 /* LaunchScreen.storyboard */; };
 		F19DBF2A24A5A1E900DC83E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF2924A5A1E900DC83E7 /* main.m */; };
+		F19DBF3324A5A5C700DC83E7 /* CustomNetWorkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3224A5A5C700DC83E7 /* CustomNetWorkCache.m */; };
+		F19DBF3624A5A67B00DC83E7 /* CustomNetWorkResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */; };
+		F19DBF3924A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */; };
+		F19DBF3C24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */; };
+		F19DBF3F24A5A73B00DC83E7 /* CustomNetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */; };
+		F19DBF4224A5A75300DC83E7 /* CustomNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF4124A5A75300DC83E7 /* CustomNetWork.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CustomNetWorking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCDBDF485D03CD45A3F610F0 /* Pods-CustomNetWorking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.release.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.release.xcconfig"; sourceTree = "<group>"; };
+		E2BDC704221217BB774E53B2 /* Pods-CustomNetWorking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.debug.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.debug.xcconfig"; sourceTree = "<group>"; };
 		F19DBF1424A5A1E800DC83E7 /* CustomNetWorking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomNetWorking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19DBF1724A5A1E800DC83E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F19DBF1A24A5A1E800DC83E7 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		F19DBF1B24A5A1E800DC83E7 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		F19DBF1D24A5A1E800DC83E7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F19DBF1E24A5A1E800DC83E7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F19DBF2124A5A1E800DC83E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -29,6 +36,18 @@
 		F19DBF2624A5A1E900DC83E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F19DBF2824A5A1E900DC83E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F19DBF2924A5A1E900DC83E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F19DBF3124A5A5C700DC83E7 /* CustomNetWorkCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkCache.h; sourceTree = "<group>"; };
+		F19DBF3224A5A5C700DC83E7 /* CustomNetWorkCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkCache.m; sourceTree = "<group>"; };
+		F19DBF3424A5A67B00DC83E7 /* CustomNetWorkResponseObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkResponseObject.h; sourceTree = "<group>"; };
+		F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkResponseObject.m; sourceTree = "<group>"; };
+		F19DBF3724A5A6BF00DC83E7 /* CustomNetWorkRequestLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkRequestLog.h; sourceTree = "<group>"; };
+		F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkRequestLog.m; sourceTree = "<group>"; };
+		F19DBF3A24A5A72100DC83E7 /* CustomNetWorkBaseRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkBaseRequest.h; sourceTree = "<group>"; };
+		F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkBaseRequest.m; sourceTree = "<group>"; };
+		F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkManager.h; sourceTree = "<group>"; };
+		F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkManager.m; sourceTree = "<group>"; };
+		F19DBF4024A5A75300DC83E7 /* CustomNetWork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWork.h; sourceTree = "<group>"; };
+		F19DBF4124A5A75300DC83E7 /* CustomNetWork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWork.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +55,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CAA7D78A8C3CE857E1495EB /* libPods-CustomNetWorking.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34C2AD2DDA1E3B6AE9ECB7E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		86A3022214FF99E8B4C41D1B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2BDC704221217BB774E53B2 /* Pods-CustomNetWorking.debug.xcconfig */,
+				BCDBDF485D03CD45A3F610F0 /* Pods-CustomNetWorking.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F19DBF0B24A5A1E800DC83E7 = {
 			isa = PBXGroup;
 			children = (
 				F19DBF1624A5A1E800DC83E7 /* CustomNetWorking */,
 				F19DBF1524A5A1E800DC83E7 /* Products */,
+				86A3022214FF99E8B4C41D1B /* Pods */,
+				34C2AD2DDA1E3B6AE9ECB7E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,10 +100,9 @@
 		F19DBF1624A5A1E800DC83E7 /* CustomNetWorking */ = {
 			isa = PBXGroup;
 			children = (
+				F19DBF3024A5A56D00DC83E7 /* CustomNetWork */,
 				F19DBF1724A5A1E800DC83E7 /* AppDelegate.h */,
 				F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */,
-				F19DBF1A24A5A1E800DC83E7 /* SceneDelegate.h */,
-				F19DBF1B24A5A1E800DC83E7 /* SceneDelegate.m */,
 				F19DBF1D24A5A1E800DC83E7 /* ViewController.h */,
 				F19DBF1E24A5A1E800DC83E7 /* ViewController.m */,
 				F19DBF2024A5A1E800DC83E7 /* Main.storyboard */,
@@ -76,6 +114,25 @@
 			path = CustomNetWorking;
 			sourceTree = "<group>";
 		};
+		F19DBF3024A5A56D00DC83E7 /* CustomNetWork */ = {
+			isa = PBXGroup;
+			children = (
+				F19DBF3124A5A5C700DC83E7 /* CustomNetWorkCache.h */,
+				F19DBF3224A5A5C700DC83E7 /* CustomNetWorkCache.m */,
+				F19DBF3724A5A6BF00DC83E7 /* CustomNetWorkRequestLog.h */,
+				F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */,
+				F19DBF3424A5A67B00DC83E7 /* CustomNetWorkResponseObject.h */,
+				F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */,
+				F19DBF3A24A5A72100DC83E7 /* CustomNetWorkBaseRequest.h */,
+				F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */,
+				F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */,
+				F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */,
+				F19DBF4024A5A75300DC83E7 /* CustomNetWork.h */,
+				F19DBF4124A5A75300DC83E7 /* CustomNetWork.m */,
+			);
+			path = CustomNetWork;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,6 +140,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F19DBF2D24A5A1E900DC83E7 /* Build configuration list for PBXNativeTarget "CustomNetWorking" */;
 			buildPhases = (
+				08FE93FE7E1C98BADEE153D8 /* [CP] Check Pods Manifest.lock */,
 				F19DBF1024A5A1E800DC83E7 /* Sources */,
 				F19DBF1124A5A1E800DC83E7 /* Frameworks */,
 				F19DBF1224A5A1E800DC83E7 /* Resources */,
@@ -141,15 +199,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		08FE93FE7E1C98BADEE153D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomNetWorking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F19DBF1024A5A1E800DC83E7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F19DBF3324A5A5C700DC83E7 /* CustomNetWorkCache.m in Sources */,
+				F19DBF4224A5A75300DC83E7 /* CustomNetWork.m in Sources */,
+				F19DBF3F24A5A73B00DC83E7 /* CustomNetWorkManager.m in Sources */,
+				F19DBF3C24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m in Sources */,
+				F19DBF3624A5A67B00DC83E7 /* CustomNetWorkResponseObject.m in Sources */,
 				F19DBF1F24A5A1E800DC83E7 /* ViewController.m in Sources */,
 				F19DBF1924A5A1E800DC83E7 /* AppDelegate.m in Sources */,
+				F19DBF3924A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m in Sources */,
 				F19DBF2A24A5A1E900DC83E7 /* main.m in Sources */,
-				F19DBF1C24A5A1E800DC83E7 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,11 +375,13 @@
 		};
 		F19DBF2E24A5A1E900DC83E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2BDC704221217BB774E53B2 /* Pods-CustomNetWorking.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XZS45G9JJF;
 				INFOPLIST_FILE = CustomNetWorking/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,11 +394,13 @@
 		};
 		F19DBF2F24A5A1E900DC83E7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCDBDF485D03CD45A3F610F0 /* Pods-CustomNetWorking.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XZS45G9JJF;
 				INFOPLIST_FILE = CustomNetWorking/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

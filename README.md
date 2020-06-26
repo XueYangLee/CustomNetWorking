@@ -1,0 +1,3 @@
+# CustomNetWorking
+AFNetWorking二次封装，可利用方法替换 Swizzle Method在外部进行高度自定义处理，支持YYCache进行数据缓存处理
+
