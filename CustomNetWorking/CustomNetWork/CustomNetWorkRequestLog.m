@@ -7,6 +7,7 @@
 //
 
 #import "CustomNetWorkRequestLog.h"
+#import "NSError+CustomNetWorkExt.h"
 
 @implementation CustomNetWorkRequestLog
 

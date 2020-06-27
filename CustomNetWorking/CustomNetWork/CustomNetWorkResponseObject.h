@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** 转换请求数据为当前对象处理 */
-+ (CustomNetWorkResponseObject *)createDataWithResponse:(id)responseObject;
++ (CustomNetWorkResponseObject *)createDataWithResponse:(id)responseObj;
 /** 转换请求失败的error为当前对象处理 */
 + (CustomNetWorkResponseObject *)createErrorDataWithResponse:(NSError *)error;
 

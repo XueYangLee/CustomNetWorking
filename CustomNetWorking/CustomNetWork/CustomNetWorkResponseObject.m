@@ -10,4 +10,14 @@
 
 @implementation CustomNetWorkResponseObject
 
+/** 转换请求数据为当前对象处理 */
++ (CustomNetWorkResponseObject *)createDataWithResponse:(id)responseObj{
+    return nil;
+}
+
+/** 转换请求失败的error为当前对象处理 */
++ (CustomNetWorkResponseObject *)createErrorDataWithResponse:(NSError *)error{
+    return nil;
+}
+
 @end

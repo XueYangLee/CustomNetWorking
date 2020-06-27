@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		6CAA7D78A8C3CE857E1495EB /* libPods-CustomNetWorking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */; };
+		F156D4B524A70602009AF8B6 /* NetURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4B424A70602009AF8B6 /* NetURLManager.m */; };
+		F156D4BB24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4BA24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m */; };
+		F156D4BE24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4BD24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m */; };
+		F156D4C524A709B5009AF8B6 /* NSObject+SwizzleMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4C424A709B5009AF8B6 /* NSObject+SwizzleMethod.m */; };
+		F156D4C824A70C67009AF8B6 /* NSError+CustomNetWorkExt.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4C724A70C67009AF8B6 /* NSError+CustomNetWorkExt.m */; };
+		F156D4CB24A70DCA009AF8B6 /* CustomNetWorkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4CA24A70DCA009AF8B6 /* CustomNetWorkConfig.m */; };
+		F156D4CE24A70E39009AF8B6 /* NetRequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4CD24A70E39009AF8B6 /* NetRequestConfig.m */; };
 		F19DBF1924A5A1E800DC83E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */; };
 		F19DBF1F24A5A1E800DC83E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF1E24A5A1E800DC83E7 /* ViewController.m */; };
 		F19DBF2224A5A1E800DC83E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F19DBF2024A5A1E800DC83E7 /* Main.storyboard */; };
@@ -26,6 +33,20 @@
 		B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CustomNetWorking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCDBDF485D03CD45A3F610F0 /* Pods-CustomNetWorking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.release.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.release.xcconfig"; sourceTree = "<group>"; };
 		E2BDC704221217BB774E53B2 /* Pods-CustomNetWorking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.debug.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.debug.xcconfig"; sourceTree = "<group>"; };
+		F156D4B324A70602009AF8B6 /* NetURLManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetURLManager.h; sourceTree = "<group>"; };
+		F156D4B424A70602009AF8B6 /* NetURLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetURLManager.m; sourceTree = "<group>"; };
+		F156D4B924A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CustomNetWorkResponseObject+RespDecode.h"; sourceTree = "<group>"; };
+		F156D4BA24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CustomNetWorkResponseObject+RespDecode.m"; sourceTree = "<group>"; };
+		F156D4BC24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CustomNetWorkRequestLog+LogDecode.h"; sourceTree = "<group>"; };
+		F156D4BD24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CustomNetWorkRequestLog+LogDecode.m"; sourceTree = "<group>"; };
+		F156D4C324A709B5009AF8B6 /* NSObject+SwizzleMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SwizzleMethod.h"; sourceTree = "<group>"; };
+		F156D4C424A709B5009AF8B6 /* NSObject+SwizzleMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SwizzleMethod.m"; sourceTree = "<group>"; };
+		F156D4C624A70C67009AF8B6 /* NSError+CustomNetWorkExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomNetWorkExt.h"; sourceTree = "<group>"; };
+		F156D4C724A70C67009AF8B6 /* NSError+CustomNetWorkExt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomNetWorkExt.m"; sourceTree = "<group>"; };
+		F156D4C924A70DCA009AF8B6 /* CustomNetWorkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkConfig.h; sourceTree = "<group>"; };
+		F156D4CA24A70DCA009AF8B6 /* CustomNetWorkConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkConfig.m; sourceTree = "<group>"; };
+		F156D4CC24A70E39009AF8B6 /* NetRequestConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetRequestConfig.h; sourceTree = "<group>"; };
+		F156D4CD24A70E39009AF8B6 /* NetRequestConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetRequestConfig.m; sourceTree = "<group>"; };
 		F19DBF1424A5A1E800DC83E7 /* CustomNetWorking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomNetWorking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19DBF1724A5A1E800DC83E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -79,6 +100,30 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F156D4B224A705A5009AF8B6 /* NetRequest */ = {
+			isa = PBXGroup;
+			children = (
+				F156D4B324A70602009AF8B6 /* NetURLManager.h */,
+				F156D4B424A70602009AF8B6 /* NetURLManager.m */,
+				F156D4CC24A70E39009AF8B6 /* NetRequestConfig.h */,
+				F156D4CD24A70E39009AF8B6 /* NetRequestConfig.m */,
+				F156D4B924A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.h */,
+				F156D4BA24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m */,
+				F156D4BC24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.h */,
+				F156D4BD24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m */,
+			);
+			path = NetRequest;
+			sourceTree = "<group>";
+		};
+		F156D4C224A709A2009AF8B6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				F156D4C324A709B5009AF8B6 /* NSObject+SwizzleMethod.h */,
+				F156D4C424A709B5009AF8B6 /* NSObject+SwizzleMethod.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		F19DBF0B24A5A1E800DC83E7 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				F19DBF3024A5A56D00DC83E7 /* CustomNetWork */,
+				F156D4B224A705A5009AF8B6 /* NetRequest */,
+				F156D4C224A709A2009AF8B6 /* Tools */,
 				F19DBF1724A5A1E800DC83E7 /* AppDelegate.h */,
 				F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */,
 				F19DBF1D24A5A1E800DC83E7 /* ViewController.h */,
@@ -119,10 +166,14 @@
 			children = (
 				F19DBF3124A5A5C700DC83E7 /* CustomNetWorkCache.h */,
 				F19DBF3224A5A5C700DC83E7 /* CustomNetWorkCache.m */,
+				F156D4C624A70C67009AF8B6 /* NSError+CustomNetWorkExt.h */,
+				F156D4C724A70C67009AF8B6 /* NSError+CustomNetWorkExt.m */,
 				F19DBF3724A5A6BF00DC83E7 /* CustomNetWorkRequestLog.h */,
 				F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */,
 				F19DBF3424A5A67B00DC83E7 /* CustomNetWorkResponseObject.h */,
 				F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */,
+				F156D4C924A70DCA009AF8B6 /* CustomNetWorkConfig.h */,
+				F156D4CA24A70DCA009AF8B6 /* CustomNetWorkConfig.m */,
 				F19DBF3A24A5A72100DC83E7 /* CustomNetWorkBaseRequest.h */,
 				F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */,
 				F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */,
@@ -230,14 +281,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				F19DBF3324A5A5C700DC83E7 /* CustomNetWorkCache.m in Sources */,
+				F156D4B524A70602009AF8B6 /* NetURLManager.m in Sources */,
 				F19DBF4224A5A75300DC83E7 /* CustomNetWork.m in Sources */,
+				F156D4CE24A70E39009AF8B6 /* NetRequestConfig.m in Sources */,
 				F19DBF3F24A5A73B00DC83E7 /* CustomNetWorkManager.m in Sources */,
 				F19DBF3C24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m in Sources */,
 				F19DBF3624A5A67B00DC83E7 /* CustomNetWorkResponseObject.m in Sources */,
 				F19DBF1F24A5A1E800DC83E7 /* ViewController.m in Sources */,
 				F19DBF1924A5A1E800DC83E7 /* AppDelegate.m in Sources */,
+				F156D4C524A709B5009AF8B6 /* NSObject+SwizzleMethod.m in Sources */,
 				F19DBF3924A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m in Sources */,
+				F156D4CB24A70DCA009AF8B6 /* CustomNetWorkConfig.m in Sources */,
+				F156D4C824A70C67009AF8B6 /* NSError+CustomNetWorkExt.m in Sources */,
+				F156D4BE24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m in Sources */,
 				F19DBF2A24A5A1E900DC83E7 /* main.m in Sources */,
+				F156D4BB24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
