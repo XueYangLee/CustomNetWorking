@@ -12,6 +12,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomNetWorkCache : NSObject
 
+/** 异步缓冲网络请求 （以URL和parameter组合做缓存的key） */
++ (void)setResponseCacheWithData:(id)data URL:(NSString *)url Parameters:(NSDictionary *)parameters;
+
+/** 获取网络请求的缓存数据 （以URL和parameter组合的key获取） */
++ (id)getResponseCacheWithURL:(NSString *)url Parameters:(NSDictionary *)parameters;
+
+/** 获取网络缓存的总大小 （bytes 字节） */
++ (NSInteger)getAllResponseCacheSize;
+
+/** 移除所有网络请求数据缓存 */
++ (void)removeAllResponseCache;
+
 @end
 
 NS_ASSUME_NONNULL_END

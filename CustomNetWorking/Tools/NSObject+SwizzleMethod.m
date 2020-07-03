@@ -11,7 +11,7 @@
 
 @implementation NSObject (SwizzleMethod)
 
-+ (void)objc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
++ (void)swizzleInstanceMethodWithOriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel {
     
     Method originalMethod = class_getInstanceMethod(self, originalSel);
     Method newMethod = class_getInstanceMethod(self, newSel);
@@ -29,8 +29,28 @@
     
 }
 
++ (void)swizzleInstanceMethodWithClass:(Class)class OriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel {
+    
+    Method originalMethod = class_getInstanceMethod(class, originalSel);
+    Method newMethod = class_getInstanceMethod(class, newSel);
+    if (!originalMethod || !newMethod || !class) {
+        return;
+    }
+    //加一层保护措施，如果添加成功，则表示该方法不存在于本类，而是存在于父类中，不能交换父类的方法,否则父类的对象调用该方法会crash；添加失败则表示本类存在该方法
+    BOOL addMethod = class_addMethod(class, originalSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
+    if (addMethod) {
+        //再将原有的实现替换到swizzledMethod方法上，从而实现方法的交换，并且未影响到父类方法的实现
+        class_replaceMethod(class, newSel, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    }else{
+        method_exchangeImplementations(originalMethod, newMethod);
+    }
+    
+}
 
-+ (void)objc_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel {
+
+
+
++ (void)swizzleClassMethodWithOriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel {
     Class class = object_getClass(self);
     Method originalMethod = class_getInstanceMethod(class, originalSel);
     Method newMethod = class_getInstanceMethod(class, newSel);
@@ -47,6 +67,23 @@
     
 }
 
+
++ (void)swizzleClassMethodWithClass:(Class)class OriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel {
+    
+    Method originalMethod = class_getInstanceMethod(class, originalSel);
+    Method newMethod = class_getInstanceMethod(class, newSel);
+    if (!originalMethod || !newMethod || !class) {
+        return;
+    }
+    
+    BOOL addMethod = class_addMethod(class, originalSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
+    if (addMethod) {
+        class_replaceMethod(class, newSel, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    }else{
+        method_exchangeImplementations(originalMethod, newMethod);
+    }
+    
+}
 
 
 @end
