@@ -10,4 +10,16 @@
 
 @implementation NetRequestConfig
 
+- (NSMutableDictionary *)requestHeader{
+    NSMutableDictionary *dic=[NSMutableDictionary dictionary];
+    
+    NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]?:@"";
+    [dic setObject:currentVersion forKey:@"AppVersion"];
+    
+    NSString *metaData = [NSString stringWithFormat:@"AppStore_iOS_%@",currentVersion];
+    [dic setObject:metaData forKey:@"Metadata"];
+    
+    return dic;
+}
+
 @end

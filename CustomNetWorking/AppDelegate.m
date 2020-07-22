@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "CustomNetWorkManager.h"
+#import "NetRequestConfig.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [CustomNetWorkManager sharedManager].config=[NetRequestConfig new];
     return YES;
 }
 

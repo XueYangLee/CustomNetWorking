@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045903FD24B81E67000FF58C /* CustomNetWorkResumeDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 045903FC24B81E67000FF58C /* CustomNetWorkResumeDownload.m */; };
 		6CAA7D78A8C3CE857E1495EB /* libPods-CustomNetWorking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */; };
 		F156D4B524A70602009AF8B6 /* NetURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4B424A70602009AF8B6 /* NetURLManager.m */; };
 		F156D4BB24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = F156D4BA24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m */; };
@@ -30,6 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		045903FB24B81E66000FF58C /* CustomNetWorkResumeDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkResumeDownload.h; sourceTree = "<group>"; };
+		045903FC24B81E67000FF58C /* CustomNetWorkResumeDownload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkResumeDownload.m; sourceTree = "<group>"; };
+		045903FE24B821E8000FF58C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CustomNetWorking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCDBDF485D03CD45A3F610F0 /* Pods-CustomNetWorking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.release.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.release.xcconfig"; sourceTree = "<group>"; };
 		E2BDC704221217BB774E53B2 /* Pods-CustomNetWorking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomNetWorking.debug.xcconfig"; path = "Target Support Files/Pods-CustomNetWorking/Pods-CustomNetWorking.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				F19DBF1824A5A1E800DC83E7 /* AppDelegate.m */,
 				F19DBF1D24A5A1E800DC83E7 /* ViewController.h */,
 				F19DBF1E24A5A1E800DC83E7 /* ViewController.m */,
+				045903FE24B821E8000FF58C /* PrefixHeader.pch */,
 				F19DBF2024A5A1E800DC83E7 /* Main.storyboard */,
 				F19DBF2324A5A1E900DC83E7 /* Assets.xcassets */,
 				F19DBF2524A5A1E900DC83E7 /* LaunchScreen.storyboard */,
@@ -180,6 +185,8 @@
 				F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */,
 				F19DBF4024A5A75300DC83E7 /* CustomNetWork.h */,
 				F19DBF4124A5A75300DC83E7 /* CustomNetWork.m */,
+				045903FB24B81E66000FF58C /* CustomNetWorkResumeDownload.h */,
+				045903FC24B81E67000FF58C /* CustomNetWorkResumeDownload.m */,
 			);
 			path = CustomNetWork;
 			sourceTree = "<group>";
@@ -296,6 +303,7 @@
 				F156D4BE24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m in Sources */,
 				F19DBF2A24A5A1E900DC83E7 /* main.m in Sources */,
 				F156D4BB24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m in Sources */,
+				045903FD24B81E67000FF58C /* CustomNetWorkResumeDownload.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +446,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XZS45G9JJF;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/CustomNetWorking/PrefixHeader.pch";
 				INFOPLIST_FILE = CustomNetWorking/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -457,6 +467,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XZS45G9JJF;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/CustomNetWorking/PrefixHeader.pch";
 				INFOPLIST_FILE = CustomNetWorking/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (

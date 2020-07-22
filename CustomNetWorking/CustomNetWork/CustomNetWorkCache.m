@@ -5,6 +5,7 @@
 //  Created by 李雪阳 on 2020/6/26.
 //  Copyright © 2020 XueYangLee. All rights reserved.
 //
+//此处不用单例原因 如果为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出；如果实例化的对象长时间不被利用，系统会认为是垃圾而被回收，这将导致对象状态的丢失
 
 #import "CustomNetWorkCache.h"
 #import <YYCache.h>
@@ -37,6 +38,19 @@ static YYCache *_dataCache;
 
 + (NSInteger)getAllResponseCacheSize{
     return [_dataCache.diskCache totalCost];
+}
+
++ (NSString *)responseCacheSize{
+    NSInteger cacheSize = [_dataCache.diskCache totalCost];
+    if (cacheSize < 1024) {
+        return [NSString stringWithFormat:@"%ldB",(long)cacheSize];
+    } else if (cacheSize < powf(1024.f, 2)) {
+        return [NSString stringWithFormat:@"%.2fKB",cacheSize / 1024.f];
+    } else if (cacheSize < powf(1024.f, 3)) {
+        return [NSString stringWithFormat:@"%.2fMB",cacheSize / powf(1024.f, 2)];
+    } else {
+        return [NSString stringWithFormat:@"%.2fGB",cacheSize / powf(1024.f, 3)];
+    }
 }
 
 + (void)removeAllResponseCache{

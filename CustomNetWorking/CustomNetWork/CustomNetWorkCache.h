@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 获取网络缓存的总大小 （bytes 字节） */
 + (NSInteger)getAllResponseCacheSize;
 
+/** 获取网络缓存的总大小  直接返回计算好的KB MB GB */
++ (NSString *)responseCacheSize;
+
 /** 移除所有网络请求数据缓存 */
 + (void)removeAllResponseCache;
 
