@@ -15,15 +15,15 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{//保证方法替换只被执行一次
 
-        [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(logWithSessionTask:ResponseObj:Error:) SwizzleNewSEL:@selector(swizzle_logWithSessionTask:ResponseObj:Error:)];
+        [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(logWithSessionTask:responseObj:error:) SwizzleNewSEL:@selector(swizzle_logWithSessionTask:responseObj:error:)];
     });
 }
 
-+ (void)swizzle_logWithSessionTask:(NSURLSessionDataTask *)sessionTask ResponseObj:(id)responseObj Error:(NSError *)error{
++ (void)swizzle_logWithSessionTask:(NSURLSessionDataTask *)sessionTask responseObj:(id)responseObj error:(NSError *)error{
     if (error) {
-        DLog(@"**********请求失败---URL:%@\nHeader:%@\nError:\n%@", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,error.description);
+        DLog(@"**********请求失败:\nURL:%@\nHeader:%@\nError:\n%@\n*********ERROR*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,error.description);
     }else{
-        DLog(@"**********请求成功---URL:%@\nHeader:%@\nResponseObj:\n%@", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
+        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
     }
 }
 

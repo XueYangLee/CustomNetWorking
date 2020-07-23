@@ -27,7 +27,7 @@ typedef void(^CustomNetWorkDownloadCompletion)(BOOL success, NSURLResponse * _No
 /// @param fileName 需要更改的文件名
 /// @param progress 下载进度
 /// @param comp 完成项
-- (NSURLSessionDownloadTask *)downloadFileWithUrl:(NSString*)downloadURL FileName:(NSString *)fileName Progress:(CustomNetWorkDownloadProgress)progress Completion:(CustomNetWorkDownloadCompletion)comp;
+- (NSURLSessionDownloadTask *)downloadFileWithUrl:(NSString*)downloadURL fileName:(NSString *)fileName progress:(CustomNetWorkDownloadProgress)progress completion:(CustomNetWorkDownloadCompletion)comp;
 
 
 /** 停止所有下载 */

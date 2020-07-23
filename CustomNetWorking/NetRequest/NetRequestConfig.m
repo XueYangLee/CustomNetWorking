@@ -22,4 +22,15 @@
     return dic;
 }
 
+
+- (BOOL)activityIndicatorOpen{
+    return YES;
+}
+
+- (NSMutableDictionary *)publicParams{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"2dca7299f47cae1ada2ab1b864f3ce8c" forKey:@"key"];
+    return dic;
+}
+
 @end

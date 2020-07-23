@@ -38,10 +38,10 @@
 
 
 + (NSString *)URLForPath:(NSString *)urlPath{
-    return [NetURLManager mergeURLWithHost:[NetURLManager currentHostURL] Path:urlPath];
+    return [NetURLManager mergeURLWithHost:[NetURLManager currentHostURL] path:urlPath];
 }
 
-+ (NSString *)mergeURLWithHost:(NSString *)host Path:(NSString *)path{
++ (NSString *)mergeURLWithHost:(NSString *)host path:(NSString *)path{
     if (path.length==0) {
         return host;
     }

@@ -8,17 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+/** 数据请求格式 */
+typedef NS_ENUM(NSUInteger, CustomRequestSerializer) {
     CustomRequestSerializerUnknown = 0,
     CustomRequestSerializerHTTP,
     CustomRequestSerializerJSON,
-} CustomRequestSerializer;//请求数据格式
+};
 
-typedef enum : NSUInteger {
+/** 数据响应格式 */
+typedef NS_ENUM(NSUInteger, CustomResponseSerializer) {
     CustomResponseSerializerUnknow = 0,
     CustomResponseSerializerHTTP,
     CustomResponseSerializerJSON,
-} CustomResponseSerializer;//响应数据格式
+};
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -42,6 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 数据请求的公共参数 */
 @property (nonatomic,strong) NSMutableDictionary *publicParams;
+
+
+/** 数据缓存的参数中需要过滤掉的无用参数的key */
+@property (nonatomic,strong) NSArray *cacheNeedlessParamsForKeys;
 
 /** 状态栏等待指示器 默认不开启 */
 @property (nonatomic,assign) BOOL activityIndicatorOpen;

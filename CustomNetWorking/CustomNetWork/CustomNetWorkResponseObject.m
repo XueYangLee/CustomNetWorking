@@ -16,7 +16,7 @@
 }
 
 /** 转换请求失败的error为当前对象处理 */
-+ (CustomNetWorkResponseObject *)createErrorDataWithResponse:(NSError *)error{
++ (CustomNetWorkResponseObject *)createErrorDataWithError:(NSError *)error{
     return nil;
 }
 

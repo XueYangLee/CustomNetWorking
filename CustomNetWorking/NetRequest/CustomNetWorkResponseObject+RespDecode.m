@@ -7,7 +7,6 @@
 //
 
 #import "CustomNetWorkResponseObject+RespDecode.h"
-#import "NSError+CustomNetWorkExt.h"
 #import "NSObject+SwizzleMethod.h"
 #import <YYModel.h>
 
@@ -19,7 +18,7 @@
 
         [CustomNetWorkResponseObject swizzleClassMethodWithOriginalSEL:@selector(createDataWithResponse:) SwizzleNewSEL:@selector(swizzle_createDataWithResponse:)];
         
-        [CustomNetWorkResponseObject swizzleClassMethodWithOriginalSEL:@selector(createErrorDataWithResponse:) SwizzleNewSEL:@selector(swizzle_createErrorDataWithResponse:)];
+        [CustomNetWorkResponseObject swizzleClassMethodWithOriginalSEL:@selector(createErrorDataWithError:) SwizzleNewSEL:@selector(swizzle_createErrorDataWithError:)];
     });
     
 }
@@ -28,14 +27,17 @@
 + (CustomNetWorkResponseObject *)swizzle_createDataWithResponse:(id)responseObj{
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject yy_modelWithJSON:responseObj];
     obj.originalData=responseObj;
+    obj.requestSuccess=YES;
     
     return obj;
 }
 
 
-+ (CustomNetWorkResponseObject *)swizzle_createErrorDataWithResponse:(NSError *)error{
++ (CustomNetWorkResponseObject *)swizzle_createErrorDataWithError:(NSError *)error{
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject new];
     obj.originalData=error;
+    obj.requestSuccess=NO;
+    
     obj.success=NO;
     obj.errorMsg=error.errorMessage;
     return obj;

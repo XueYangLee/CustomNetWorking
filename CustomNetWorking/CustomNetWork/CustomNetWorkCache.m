@@ -9,24 +9,28 @@
 
 #import "CustomNetWorkCache.h"
 #import <YYCache.h>
+#import "CustomNetWorkManager.h"
 
-static NSString *const CustomNetWorkResponseObjCache = @"CustomNetWorkResponseObjCache";
+static NSString *const CustomNetWorkRespObjCache = @"CustomNetWorkRespObjCache";
+static NSString *const CustomNetWorkRespObjCacheValidTime = @"CustomNetWorkRespObjCacheValidTime";
 
 @implementation CustomNetWorkCache
 static YYCache *_dataCache;
 
-+ (void)initialize{
-    _dataCache = [YYCache cacheWithName:CustomNetWorkResponseObjCache];
++ (void)initialize {
+    _dataCache = [YYCache cacheWithName:CustomNetWorkRespObjCache];
 }
 
-+ (void)setResponseCacheWithData:(id)data URL:(NSString *)url Parameters:(NSDictionary *)parameters{
-    NSString *cacheKey = [self cacheKeyWithURL:url parameters:[self filterNeedlessParams:parameters]];
+#pragma mark - set
++ (void)setRespCacheWithData:(id)data URL:(NSString *)URL parameters:(NSDictionary *_Nullable)parameters {
+    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
     //异步缓存,不会阻塞主线程
     [_dataCache setObject:data forKey:cacheKey];
 }
 
-+ (id)getResponseCacheWithURL:(NSString *)url Parameters:(NSDictionary *)parameters{
-    NSString *cacheKey = [self cacheKeyWithURL:url parameters:[self filterNeedlessParams:parameters]];
+#pragma mark - get
++ (id)getRespCacheWithURL:(NSString *)URL parameters:(NSDictionary *_Nullable)parameters {
+    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
     id data = [_dataCache objectForKey:cacheKey];
     if (!data) {
         return nil;
@@ -35,12 +39,23 @@ static YYCache *_dataCache;
 }
 
 
+#pragma mark - remove
++ (void)removeCacheWithURL:(NSString *)URL parameters:(NSDictionary *_Nullable)parameters {
+    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
+    [_dataCache removeObjectForKey:cacheKey];
+}
 
-+ (NSInteger)getAllResponseCacheSize{
++ (void)removeAllCache {
+    [_dataCache.diskCache removeAllObjects];
+    [_dataCache removeAllObjects];
+}
+
+#pragma mark - cacheSize
++ (NSInteger)getAllCacheSize {
     return [_dataCache.diskCache totalCost];
 }
 
-+ (NSString *)responseCacheSize{
++ (NSString *)cacheSize {
     NSInteger cacheSize = [_dataCache.diskCache totalCost];
     if (cacheSize < 1024) {
         return [NSString stringWithFormat:@"%ldB",(long)cacheSize];
@@ -53,16 +68,31 @@ static YYCache *_dataCache;
     }
 }
 
-+ (void)removeAllResponseCache{
-    [_dataCache.diskCache removeAllObjects];
-    [_dataCache removeAllObjects];
+#pragma mark - cacheValidTime
+/** 存入缓存时间 */
++ (void)setCacheValidTimeWithCacheKey:(NSString *)cacheKey {
+    NSString *cacheValidTimeKey = [NSString stringWithFormat:@"%@_%@",cacheKey, CustomNetWorkRespObjCacheValidTime];
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+    [_dataCache setObject:@(currentTime) forKey:cacheValidTimeKey];
+}
+
+/** 判断缓存在有效时间内是否有效 */
++ (BOOL)verifyCacheValid:(NSString *)cacheKey validTime:(NSTimeInterval)validTime {
+    NSString *cacheValidTimeKey = [NSString stringWithFormat:@"%@_%@",cacheKey, CustomNetWorkRespObjCacheValidTime];
+    id createRecordTime = [_dataCache objectForKey:cacheValidTimeKey];
+    
+    NSTimeInterval createTime = [createRecordTime doubleValue];
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+    if ((currentTime - createTime) < validTime) {
+        return YES;
+    }
+    return NO;
 }
 
 
 #pragma mark - 缓存参数拼接处理
-
 + (NSString *)cacheKeyWithURL:(NSString *)url parameters:(NSDictionary *)parameters {
-    if(!parameters || parameters.count == 0){
+    if(!parameters || parameters.count == 0) {
         return url;
     }
     // 将参数字典转换成字符串
@@ -74,10 +104,11 @@ static YYCache *_dataCache;
     return [NSString stringWithFormat:@"%@",cacheKey];
 }
 
+#pragma mark - 参数过滤
 /** 用作过滤参数字典中不必要的参数 (有点请求中类似时间戳等可变内容需要加到参数中而不是请求头中时需过滤此类参数) */
-+ (NSDictionary *)filterNeedlessParams:(NSDictionary *)params{
++ (NSDictionary *)filterNeedlessParams:(NSDictionary *)params {
     NSMutableDictionary *filterParams = [NSMutableDictionary dictionaryWithDictionary:params];
-    [filterParams removeObjectsForKeys:@[]];
+    [filterParams removeObjectsForKeys:[CustomNetWorkManager sharedManager].config.cacheNeedlessParamsForKeys];
     return filterParams.copy;
 }
 
