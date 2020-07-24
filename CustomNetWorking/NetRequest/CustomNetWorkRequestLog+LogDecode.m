@@ -15,7 +15,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{//保证方法替换只被执行一次
 
-        [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(logWithSessionTask:responseObj:error:) SwizzleNewSEL:@selector(swizzle_logWithSessionTask:responseObj:error:)];
+        [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(logWithSessionTask:responseObj:error:) swizzleNewSEL:@selector(swizzle_logWithSessionTask:responseObj:error:)];
     });
 }
 

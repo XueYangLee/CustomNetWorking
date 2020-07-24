@@ -84,10 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 当前是否有网络 */
 + (BOOL)isNetwork;
-
 /** 当前网络是否为手机网络 */
 + (BOOL)isWWANNetwork;
-
 /** 当前网络是否为WiFi网络 */
 + (BOOL)isWiFiNetwork;
 

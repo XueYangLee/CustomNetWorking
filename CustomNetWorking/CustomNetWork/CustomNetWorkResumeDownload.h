@@ -22,7 +22,7 @@ typedef void(^CustomNetWorkDownloadCompletion)(BOOL success, NSURLResponse * _No
 
 
 
-/// 下载任务  支持断点续传
+/// 下载任务  断点下载
 /// @param downloadURL 下载地址
 /// @param fileName 需要更改的文件名
 /// @param progress 下载进度

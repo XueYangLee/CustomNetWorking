@@ -74,6 +74,11 @@
         }
     }
     
+    
+    if (config.securityPolicy) {//自建请求证书校验
+        _sessionManager.securityPolicy = config.securityPolicy;
+    }
+    
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:config.activityIndicatorOpen];//状态栏等待指示器
 }
 

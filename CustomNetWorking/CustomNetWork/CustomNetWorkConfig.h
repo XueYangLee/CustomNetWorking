@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
 
 /** 数据请求格式 */
 typedef NS_ENUM(NSUInteger, CustomRequestSerializer) {
@@ -48,6 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 数据缓存的参数中需要过滤掉的无用参数的key */
 @property (nonatomic,strong) NSArray *cacheNeedlessParamsForKeys;
+
+
+/** 请求证书校验 配置自建证书  其中allowInvalidCertificates为无效证书验证通过开关、validatesDomainName是否需要验证证书域名开关 */
+@property (nonatomic,strong) AFSecurityPolicy *securityPolicy; //其中的validatesDomainName是否需要验证域名，默认为YES. 如果证书的域名与请求的域名不一致，需设置为NO;即服务器使用其他可信任机构颁发的证书，也可以建立连接，这个非常危险,建议打开.validatesDomainName=NO,主要用于这种情况:客户端请求的是子域名,而证书上的是另外一个域名。因为SSL证书上的域名是独立的,假如证书上注册的域名是www.google.com, 那么mail.google.com是无法验证通过的
 
 /** 状态栏等待指示器 默认不开启 */
 @property (nonatomic,assign) BOOL activityIndicatorOpen;
