@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomNetWorkResponseObject : NSObject
 
-/** **建议赋值** 未经任何处理的原始数据源 */
+/** **必须赋值** 未经任何处理的原始数据源 */
 @property (nonatomic,strong) id originalData;
 
 /** **必须赋值** 数据请求是否成功  由数据请求结果中的error决定 */

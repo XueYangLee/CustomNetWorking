@@ -21,16 +21,83 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1sw-9q-fRX">
+                                <rect key="frame" x="15" y="118.5" width="133" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="无缓存请求 简易请求"/>
+                                <connections>
+                                    <action selector="btnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gFU-Q8-NaB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfr-vB-KlM">
+                                <rect key="frame" x="15" y="157.5" width="147" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="缓存请求 结果分开返回"/>
+                                <connections>
+                                    <action selector="btnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8tH-fb-izx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddl-UJ-9V1">
+                                <rect key="frame" x="15" y="196.5" width="147" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="缓存请求 结果统一返回"/>
+                                <connections>
+                                    <action selector="btnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cdf-oL-AVd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WD8-mC-kD5">
+                                <rect key="frame" x="15" y="235.5" width="208" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="缓存请求 结果统一返回 简易请求"/>
+                                <connections>
+                                    <action selector="btnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qlO-6b-Fgg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcb-oG-Tmd">
+                                <rect key="frame" x="15" y="88.5" width="31" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqC-qg-aV5">
+                                <rect key="frame" x="307" y="155.5" width="92" height="30"/>
+                                <state key="normal" title="清除所有缓存"/>
+                                <connections>
+                                    <action selector="removeCache:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uJH-9S-hFk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前缓存大小" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7z-hl-lUl">
+                                <rect key="frame" x="325" y="126" width="74" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="fqC-qg-aV5" firstAttribute="top" secondItem="r7z-hl-lUl" secondAttribute="bottom" constant="15" id="11F-iM-CYC"/>
                             <constraint firstItem="JNB-Cl-nRW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="17F-R1-KjF"/>
+                            <constraint firstItem="Zfr-vB-KlM" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="5HH-GI-yIe"/>
+                            <constraint firstItem="r7z-hl-lUl" firstAttribute="centerY" secondItem="1sw-9q-fRX" secondAttribute="centerY" id="6hn-I8-Sll"/>
+                            <constraint firstItem="WD8-mC-kD5" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="ND5-zK-uRg"/>
+                            <constraint firstItem="1sw-9q-fRX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Oy3-dp-6pl"/>
+                            <constraint firstItem="1sw-9q-fRX" firstAttribute="top" secondItem="JNB-Cl-nRW" secondAttribute="bottom" constant="40" id="Px6-L5-8FA"/>
+                            <constraint firstItem="ddl-UJ-9V1" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="X2B-yB-jKM"/>
+                            <constraint firstItem="ddl-UJ-9V1" firstAttribute="top" secondItem="Zfr-vB-KlM" secondAttribute="bottom" constant="10" id="Xaf-lx-uPl"/>
+                            <constraint firstItem="WD8-mC-kD5" firstAttribute="top" secondItem="ddl-UJ-9V1" secondAttribute="bottom" constant="10" id="f88-D2-5hS"/>
                             <constraint firstItem="JNB-Cl-nRW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="k5w-97-VOj"/>
+                            <constraint firstItem="Zfr-vB-KlM" firstAttribute="top" secondItem="1sw-9q-fRX" secondAttribute="bottom" constant="10" id="mif-GQ-gip"/>
+                            <constraint firstItem="Bcb-oG-Tmd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="pqw-O8-mlr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r7z-hl-lUl" secondAttribute="trailing" constant="15" id="w9l-7Q-06N"/>
+                            <constraint firstItem="r7z-hl-lUl" firstAttribute="trailing" secondItem="fqC-qg-aV5" secondAttribute="trailing" id="wCx-ej-2PK"/>
+                            <constraint firstItem="Bcb-oG-Tmd" firstAttribute="top" secondItem="JNB-Cl-nRW" secondAttribute="bottom" constant="10" id="xoI-Xr-04X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="NetStatusLabel" destination="JNB-Cl-nRW" id="bVG-J3-vpB"/>
+                        <outlet property="cacheSizeLabel" destination="r7z-hl-lUl" id="dYG-uc-hMI"/>
+                        <outlet property="judgeNetStatusLabel" destination="Bcb-oG-Tmd" id="3F7-98-D8J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

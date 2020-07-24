@@ -22,20 +22,56 @@ static YYCache *_dataCache;
 }
 
 #pragma mark - set
-+ (void)setRespCacheWithData:(id)data URL:(NSString *)URL parameters:(NSDictionary *_Nullable)parameters {
++ (void)setRespCacheWithData:(id _Nullable )data URL:(NSString *_Nullable)URL parameters:(NSDictionary *_Nullable)parameters validTime:(NSTimeInterval)validTime {
     NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
     //异步缓存,不会阻塞主线程
     [_dataCache setObject:data forKey:cacheKey];
+    
+    if (validTime != 0) {
+        [self setCacheValidTimeWithCacheKey:cacheKey];
+    }
 }
 
 #pragma mark - get
-+ (id)getRespCacheWithURL:(NSString *)URL parameters:(NSDictionary *_Nullable)parameters {
++ (id _Nullable )getRespCacheWithURL:(NSString *_Nullable)URL parameters:(NSDictionary *_Nullable)parameters validTime:(NSTimeInterval)validTime {
     NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
     id data = [_dataCache objectForKey:cacheKey];
     if (!data) {
         return nil;
     }
+    
+    if (validTime != 0) {
+        if ([self verifyCacheValidWithCacheKey:cacheKey validTime:validTime]) {
+            return data;
+        }else {
+            [_dataCache removeObjectForKey:cacheKey];
+            NSString *cacheValidTimeKey = [NSString stringWithFormat:@"%@_%@",cacheKey, CustomNetWorkRespObjCacheValidTime];
+            [_dataCache removeObjectForKey:cacheValidTimeKey];
+            return nil;
+        }
+    }
+    
     return data;
+}
+
++ (void)getRespCacheWithURL:(NSString *_Nullable)URL parameters:(NSDictionary *_Nullable)parameters validTime:(NSTimeInterval)validTime completion:(CustomNetWorkCacheDataComp _Nullable )cacheComp {
+    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:[self filterNeedlessParams:parameters]];
+    id data = [_dataCache objectForKey:cacheKey];
+    
+    if (validTime != 0) {
+        if ([self verifyCacheValidWithCacheKey:cacheKey validTime:validTime]) {
+            cacheComp ? cacheComp(data) : nil;
+        }else {
+            [_dataCache removeObjectForKey:cacheKey];
+            NSString *cacheValidTimeKey = [NSString stringWithFormat:@"%@_%@",cacheKey, CustomNetWorkRespObjCacheValidTime];
+            [_dataCache removeObjectForKey:cacheValidTimeKey];
+            
+            cacheComp ? cacheComp(nil) : nil;
+        }
+    }else {
+        cacheComp ? cacheComp(data) : nil;
+    }
+    
 }
 
 
@@ -77,7 +113,7 @@ static YYCache *_dataCache;
 }
 
 /** 判断缓存在有效时间内是否有效 */
-+ (BOOL)verifyCacheValid:(NSString *)cacheKey validTime:(NSTimeInterval)validTime {
++ (BOOL)verifyCacheValidWithCacheKey:(NSString *)cacheKey validTime:(NSTimeInterval)validTime {
     NSString *cacheValidTimeKey = [NSString stringWithFormat:@"%@_%@",cacheKey, CustomNetWorkRespObjCacheValidTime];
     id createRecordTime = [_dataCache objectForKey:cacheValidTimeKey];
     

@@ -49,16 +49,16 @@ typedef NS_ENUM(NSUInteger, CustomNetWorkRequestMethod) {
 };
 
 /** 缓存策略 */
-typedef NS_ENUM(NSUInteger, CustomNetWorkRequestCachePolicy) {
-    /** 仅从网络请求数据不做数据缓存处理 */
+typedef NS_ENUM(NSUInteger, CustomNetWorkCachePolicy) {
+    /** 仅返回网络请求数据不做数据缓存处理 */
     CachePolicyRequestWithoutCahce = 0,
-    /** 先从缓存获取数据并缓存网络请求的数据，没有缓存数据的时候再从网络请求数据（第一次请求） */
-    CachePolicyMainCacheFirstRequest,
-    /** 仅从缓存获取数据而不不请求网络，缓存没有数据时再从网络请求数据并缓存 */
-    CachePolicyOnlyCacheFirstRequest,
-    /** 先从网络请求数据，请求失败或请求超时的情况下再从缓存获取数据 */
+    /** 主要返回缓存数据并缓存网络请求的数据，缓存无数据时返回网络数据，第一次请求没有缓存数据时从网络先请求数据 */
+    CachePolicyMainCacheSaveRequest,
+    /** 仅返回缓存数据而不请求网络，数据第一次请求或缓存失效的情况下再从网络请求数据并缓存 */
+    CachePolicyOnlyCacheOnceRequest,
+    /** 主要返回网络请求数据，请求失败或请求超时的情况下再返回请求成功时缓存的数据 */
     CachePolicyMainRequestFailCache,
-    /** 网络请求数据和缓存数据一起返回 */
+    /** 网络请求数据和缓存数据共同返回 */
     CachePolicyRequsetAndCache,
 };
 
@@ -67,6 +67,12 @@ typedef void(^CustomNetWorkStatusBlock)(CustomNetWorkNetStatus netWorkStatus);
 
 /** 网络数据结果block返回 */
 typedef void(^CustomNetWorkRespComp)(CustomNetWorkResponseObject * _Nullable respObj);
+
+/** 缓存数据结果block返回 */
+typedef void(^CustomNetWorkCacheComp)(CustomNetWorkResponseObject * _Nullable respObj);
+
+/** 网络数据及缓存数据结果block返回 */
+typedef void(^CustomNetWorkResultComp)(CustomNetWorkResponseObject * _Nullable respObj);
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -87,18 +93,56 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** GET 数据请求 */
-+ (NSURLSessionDataTask *)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 /** POST 数据请求 */
-+ (NSURLSessionDataTask *)POST:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)POST:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 /** HEAD 数据请求 */
-+ (NSURLSessionDataTask *)HEAD:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)HEAD:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 /** PUT 数据请求 */
-+ (NSURLSessionDataTask *)PUT:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)PUT:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 /** PATCH 数据请求 */
-+ (NSURLSessionDataTask *)PATCH:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)PATCH:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 /** DELETE 数据请求 */
-+ (NSURLSessionDataTask *)DELETE:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)DELETE:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 
+/** GET 数据请求 支持缓存 */
++ (void)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+/** POST 数据请求 支持缓存 */
++ (void)POST:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+/** HEAD 数据请求 支持缓存 */
++ (void)HEAD:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+/** PUT 数据请求 支持缓存 */
++ (void)PUT:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+/** PATCH 数据请求 支持缓存 */
++ (void)PATCH:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+/** DELETE 数据请求 支持缓存 */
++ (void)DELETE:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+
+
+/**
+ 数据请求+数据缓存 数据结果统一返回
+ 
+ @param method 请求方式
+ @param URLString 请求URL
+ @param parameters 请求参数
+ @param cachePolicy 缓存策略
+ @param validTime 缓存有效时间(秒)  0或CacheValidTimeForever为永久有效
+ @param comp 网络请求或缓存的数据结果  CachePolicyRequsetAndCache时结果返回两次
+ */
++ (void)requestWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp;
+
+/**
+ 数据请求+数据缓存 （核心方法）  数据结果分开返回
+ 
+ @param method 请求方式
+ @param URLString 请求URL
+ @param parameters 请求参数
+ @param cachePolicy 缓存策略
+ @param validTime 缓存有效时间(秒)  0或CacheValidTimeForever为永久有效
+ @param cacheComp 缓存数据结果
+ @param respComp 网络请求数据结果
+ */
++ (void)requestWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime cacheComp:(CustomNetWorkCacheComp _Nullable )cacheComp respComp:(CustomNetWorkRespComp _Nullable )respComp;
 
 /**
  数据请求 （核心方法）
@@ -106,9 +150,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param method 请求方式
  @param URLString 请求URL
  @param parameters 请求参数
- @param RespComp 请求返回的结果
+ @param respComp 网络请求数据结果
  */
-+ (NSURLSessionDataTask *)dataTaskWithRequestMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable)RespComp;
++ (NSURLSessionDataTask *_Nullable)dataTaskWithRequestMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
 
 @end
 

@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 数据请求的请求头 */
 @property (nonatomic,strong) NSMutableDictionary *requestHeader;
 
-/** 数据请求的公共参数 */
+/** 数据请求的公共参数 参数相同会覆盖 */
 @property (nonatomic,strong) NSMutableDictionary *publicParams;
 
 

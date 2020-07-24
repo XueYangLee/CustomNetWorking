@@ -23,7 +23,7 @@
     if (error) {
         DLog(@"**********请求失败:\nURL:%@\nHeader:%@\nError:\n%@\n*********ERROR*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,error.description);
     }else{
-        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
+//        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
     }
 }
 
