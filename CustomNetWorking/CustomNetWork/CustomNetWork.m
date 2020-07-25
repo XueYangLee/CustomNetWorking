@@ -42,7 +42,16 @@
     return [AFNetworkReachabilityManager sharedManager].reachableViaWiFi;
 }
 
-#pragma mark - 基础数据请求方式
+#pragma mark - 缓存
++ (NSString *)cacheSize {
+    return [CustomNetWorkCache cacheSize];
+}
+
++ (void)removeAllCache {
+    [CustomNetWorkCache removeAllCache];
+}
+
+#pragma mark - 基础数据请求快捷方式
 + (NSURLSessionDataTask *_Nullable)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp {
     return [self dataTaskWithRequestMethod:RequestMethodGET URL:URLString parameters:parameters completion:respComp];
 }
@@ -67,7 +76,7 @@
     return [self dataTaskWithRequestMethod:RequestMethodDELETE URL:URLString parameters:parameters completion:respComp];
 }
 
-#pragma mark - 基础数据请求方式 支持缓存
+#pragma mark - 基础数据请求快捷方式 支持缓存
 + (void)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp {
     [self requestWithMethod:RequestMethodGET URL:URLString parameters:parameters cachePolicy:cachePolicy cacheValidTime:validTime completion:comp];
 }
@@ -101,7 +110,7 @@
     }];
 }
 
-#pragma mark - 数据请求+数据缓存 核心方法
+#pragma mark - 数据请求+数据缓存 核心方法⚠️
 + (void)requestWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime cacheComp:(CustomNetWorkCacheComp _Nullable )cacheComp respComp:(CustomNetWorkRespComp _Nullable )respComp {
     
     if (cachePolicy == CachePolicyRequestWithoutCahce) {
@@ -171,7 +180,7 @@
     }
 }
 
-#pragma mark - 数据请求 核心方法
+#pragma mark - 数据请求 核心方法⚠️
 + (NSURLSessionDataTask *_Nullable)dataTaskWithRequestMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp {
     
     if (!URLString) {
@@ -188,7 +197,7 @@
             
             respComp ? respComp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
             
-        } else {
+        }else {
             [CustomNetWorkRequestLog logWithSessionTask:dataTask responseObj:responseObject error:nil];
             
             respComp ? respComp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
@@ -200,8 +209,108 @@
 }
 
 
+#pragma mark - 图片上传
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nonnull)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    
+    if (imageScale == 0 || imageScale > 1) {
+        imageScale = 1.0;
+    }
+    if (!imageFileName) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *dateString = [formatter stringFromDate:[NSDate date]];
+        imageFileName = dateString;
+    }
+    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
+            [formData appendPartWithFileData:imageData name:name fileName:[NSString stringWithFormat:@"%@%ld.%@",imageFileName, idx, imageType?imageType:@"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@",imageType?imageType:@"jpeg"]];
+        }];
+    } progress:progress completion:comp];
+}
 
-#pragma mark - 参数处理 添加公共参数
+#pragma mark - 文件上传 filePath
++ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSError *error = nil;
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name?name:@"file" error:&error];
+        if (error) {
+            [CustomNetWorkRequestLog logWithSessionTask:nil responseObj:nil error:error];
+            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
+        }
+    } progress:progress completion:comp];
+}
+
+#pragma mark - 文件上传 fileData
++ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:fileData name:name?name:@"file" fileName:fileName mimeType:mimeType?mimeType:@"form-data"];
+    } progress:progress completion:comp];
+}
+
+#pragma mark - 数据资源上传 核心方法⚠️
++ (NSURLSessionDataTask *_Nullable)uploadWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    
+    if (!URLString) {
+        URLString = @"";
+    }
+    parameters = [self disposeParameters:parameters];
+    
+    NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:parameters constructingBodyWithBlock:formData error:nil];
+    
+    __block NSURLSessionDataTask *task = [[CustomNetWorkManager sharedManager].sessionManager uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+        progress ? progress(uploadProgress, uploadProgress.fractionCompleted) : nil;
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error) {
+            [CustomNetWorkRequestLog disposeError:error sessionTask:task];
+            [CustomNetWorkRequestLog logWithSessionTask:task responseObj:nil error:error];
+            
+            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
+            
+        }else {
+            [CustomNetWorkRequestLog logWithSessionTask:task responseObj:responseObject error:nil];
+            
+            comp ? comp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
+        }
+    }];
+    [task resume];
+    
+    return task;
+}
+
+
+#pragma mark - 文件资源下载
++ (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
+    
+    if (!URLString) {
+        URLString = @"";
+    }
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
+    
+    __block NSURLSessionDownloadTask *downloadTask = [[CustomNetWorkManager sharedManager].sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress ? progress(downloadProgress, downloadProgress.fractionCompleted) : nil;
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        if (error) {
+            [CustomNetWorkRequestLog disposeError:error sessionTask:downloadTask];
+            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:nil error:error];
+            
+            comp ? comp(NO, nil) : nil;
+        }else {
+            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteURL] error:nil];
+            
+            comp ? comp(YES, filePath) : nil;
+        }
+    }];
+    [downloadTask resume];
+    
+    return downloadTask;
+}
+
+
+#pragma mark - 参数处理 添加公共参数♻️
 + (NSDictionary *)disposeParameters:(NSDictionary *)parameters {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([CustomNetWorkManager sharedManager].config.publicParams && [CustomNetWorkManager sharedManager].config.publicParams.count > 0) {
@@ -210,7 +319,7 @@
     return params.copy;
 }
 
-#pragma mark - 请求方式处理
+#pragma mark - 请求方式处理♻️
 + (NSString *)requestTypeWithMethod:(CustomNetWorkRequestMethod)method {
     NSString *requestMethod = @"GET";
     switch (method) {

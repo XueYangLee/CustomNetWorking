@@ -11,11 +11,11 @@
 
 @implementation CustomNetWorkRequestLog
 
-+ (void)logWithSessionTask:(NSURLSessionDataTask * _Nullable)sessionTask responseObj:(id _Nullable)responseObj error:(NSError * _Nullable)error {
++ (void)logWithSessionTask:(NSURLSessionTask * _Nullable)sessionTask responseObj:(id _Nullable)responseObj error:(NSError * _Nullable)error {
     
 }
 
-+ (void)disposeError:(NSError *)error sessionTask:(NSURLSessionDataTask *)sessionTask {
++ (void)disposeError:(NSError *)error sessionTask:(NSURLSessionTask *)sessionTask {
     NSHTTPURLResponse *responseObj = (NSHTTPURLResponse *)sessionTask.response;
     NSInteger statusCode = responseObj.statusCode;
     error.statusCode = [NSNumber numberWithInteger:statusCode];

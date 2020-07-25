@@ -19,12 +19,14 @@
     });
 }
 
-+ (void)swizzle_logWithSessionTask:(NSURLSessionDataTask *)sessionTask responseObj:(id)responseObj error:(NSError *)error{
+
++ (void)swizzle_logWithSessionTask:(NSURLSessionTask *)sessionTask responseObj:(id)responseObj error:(NSError *)error{
     if (error) {
         DLog(@"**********请求失败:\nURL:%@\nHeader:%@\nError:\n%@\n*********ERROR*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,error.description);
     }else{
-//        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
+        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
     }
 }
+
 
 @end

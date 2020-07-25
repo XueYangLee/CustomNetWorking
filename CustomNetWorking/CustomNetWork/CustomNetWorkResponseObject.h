@@ -26,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否请求成功  [参数名由后台数据返回决定]  后台返回数据可能为code==200  另需处理 */
 @property (nonatomic,assign) BOOL success;
 
+/** 数据结果code [参数名由后台数据返回决定]  一般数据中由code值决定数据结果或其他操作 */
+@property (nonatomic,strong) NSString *code;
+
 /** 时间戳  [参数名由后台数据返回决定] */
 @property (nonatomic, assign) long long timestamp;
 

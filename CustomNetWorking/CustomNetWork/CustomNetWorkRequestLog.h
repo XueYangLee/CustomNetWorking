@@ -13,10 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CustomNetWorkRequestLog : NSObject
 
 /** 数据请求打印信息 */
-+ (void)logWithSessionTask:(NSURLSessionDataTask * _Nullable)sessionTask responseObj:(id _Nullable)responseObj error:(NSError * _Nullable)error;
++ (void)logWithSessionTask:(NSURLSessionTask * _Nullable)sessionTask responseObj:(id _Nullable)responseObj error:(NSError * _Nullable)error;
 
 /** 请求错误的提示预处理 */
-+ (void)disposeError:(NSError *)error sessionTask:(NSURLSessionDataTask *)sessionTask;
++ (void)disposeError:(NSError *)error sessionTask:(NSURLSessionTask *)sessionTask;
 
 @end
 

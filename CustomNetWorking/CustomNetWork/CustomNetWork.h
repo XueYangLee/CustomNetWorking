@@ -74,6 +74,15 @@ typedef void(^CustomNetWorkCacheComp)(CustomNetWorkResponseObject * _Nullable re
 /** 网络数据及缓存数据结果block返回 */
 typedef void(^CustomNetWorkResultComp)(CustomNetWorkResponseObject * _Nullable respObj);
 
+/** 数据下载或上传进度及比例 */
+typedef void(^CustomNetWorkProgress)(NSProgress * _Nonnull progress, double progressRate);
+
+/** 数据上传资源类型回调 */
+typedef void(^CustomNetWorkUploadFormData)(id<AFMultipartFormData>  _Nonnull formData);
+
+/** 文件资源下载结果回调 */
+typedef void(^CustomNetWorkDownloadComp)(BOOL success, NSURL * _Nullable filePath);
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -88,6 +97,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)isWWANNetwork;
 /** 当前网络是否为WiFi网络 */
 + (BOOL)isWiFiNetwork;
+
+/** 获取网络缓存的总大小  直接返回计算好的KB MB GB */
++ (NSString *)cacheSize;
+/** 移除所有请求的数据缓存 */
++ (void)removeAllCache;
+
+
 
 
 /** GET 数据请求 */
@@ -151,6 +167,62 @@ NS_ASSUME_NONNULL_BEGIN
  @param respComp 网络请求数据结果
  */
 + (NSURLSessionDataTask *_Nullable)dataTaskWithRequestMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;
+
+
+
+
+/**
+ 图片上传
+ 
+ @param URLString 上传URL
+ @param parameters 上传参数
+ @param images 图片数组
+ @param imageScale 图片压缩比例  0-1  默认1
+ @param imageFileName 图片文件名 不传默认为当前时间 最终处理为名称+当前图片的index
+ @param name 图片对应服务器上的字段
+ @param imageType 图片文件类型  png/jpg/jpeg等  不传默认jpeg
+ @param progress 上传进度
+ @param comp 上传结果
+ */
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nonnull)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
+
+/**
+ 文件上传 根据文件路径 filePath
+ 
+ @param URLString 上传URL
+ @param parameters 上传参数
+ @param name 文件对应服务器上的字段 不传默认file
+ @param filePath 文件路径 必须传
+ @param progress 上传进度
+ @param comp 上传结果
+ */
++ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
+
+/**
+ 文件上传 根据文件资源data fileData
+ 
+ @param URLString 上传URL
+ @param parameters 上传参数
+ @param name 文件对应服务器上的字段 不传默认file
+ @param fileData 文件资源 data 必须传
+ @param fileName 文件名 注意添加后缀 若为图片则.png/.jpg 若为视频则.mp4
+ @param mimeType 文件类型 不传默认@"form-data"
+ @param progress 上传进度
+ @param comp 上传结果
+ */
++ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
+
+/**
+ 数据资源上传 （核心方法）
+ 
+ @param URLString 上传URL
+ @param parameters 上传参数
+ @param formData 上传资源回调
+ @param progress 上传进度
+ @param comp 上传结果
+ */
++ (NSURLSessionDataTask *_Nullable)uploadWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
+
 
 @end
 

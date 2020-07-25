@@ -48,7 +48,7 @@
         self.judgeNetStatusLabel.text = [NSString stringWithFormat:@"是否有网络-%@/手机网络-%@/WiFi网络-%@",([CustomNetWork isNetwork]?@"YES":@"NO"),([CustomNetWork isWWANNetwork]?@"YES":@"NO"),([CustomNetWork isWiFiNetwork]?@"YES":@"NO")];
     });
     
-    self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWorkCache cacheSize]];
+    self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWork cacheSize]];
     
 }
 
@@ -68,19 +68,19 @@
         }];
     }else if (sender.tag == 12) {//缓存请求  集合返回
         [CustomNetWork requestWithMethod:RequestMethodGET URL:@"http://apis.juhe.cn/simpleWeather/query" parameters:@{@"city":@"广州"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeForever completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-            DLog(@"%@*****数据结果*",respObj.result)
+            DLog(@"%@*****数据结果（缓存）*",respObj.result)
         }];
     }else if (sender.tag == 13) {//缓存请求  集合返回
         [CustomNetWork GET:@"http://apis.juhe.cn/simpleWeather/query" parameters:@{@"city":@"深圳"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeDay completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-            DLog(@"%@*****GET数据结果*",respObj.result)
+            DLog(@"%@*****GET数据结果（缓存）*",respObj.result)
         }];
     }
-    self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWorkCache cacheSize]];
+    self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWork cacheSize]];
 }
 
 
 - (IBAction)removeCache:(UIButton *)sender {
-    [CustomNetWorkCache removeAllCache];
+    [CustomNetWork removeAllCache];
     self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWorkCache cacheSize]];
 }
 
