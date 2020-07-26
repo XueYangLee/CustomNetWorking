@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, CustomNetWorkCachePolicy) {
     CachePolicyRequestWithoutCahce = 0,
     /** 主要返回缓存数据并缓存网络请求的数据，缓存无数据时返回网络数据，第一次请求没有缓存数据时从网络先请求数据 */
     CachePolicyMainCacheSaveRequest,
-    /** 仅返回缓存数据而不请求网络，数据第一次请求或缓存失效的情况下再从网络请求数据并缓存 */
+    /** 仅返回缓存数据而不请求网络，数据第一次请求或缓存失效的情况下才会从网络请求数据并缓存一次 */
     CachePolicyOnlyCacheOnceRequest,
     /** 主要返回网络请求数据，请求失败或请求超时的情况下再返回请求成功时缓存的数据 */
     CachePolicyMainRequestFailCache,
@@ -139,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param method 请求方式
  @param URLString 请求URL
  @param parameters 请求参数
- @param cachePolicy 缓存策略
+ @param cachePolicy 缓存策略  CachePolicyOnlyCacheOnceRequest时validTime才有短时效(非永久有效)意义
  @param validTime 缓存有效时间(秒)  0或CacheValidTimeForever为永久有效
  @param comp 网络请求或缓存的数据结果  CachePolicyRequsetAndCache时结果返回两次
  */
@@ -151,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param method 请求方式
  @param URLString 请求URL
  @param parameters 请求参数
- @param cachePolicy 缓存策略
+ @param cachePolicy 缓存策略  CachePolicyOnlyCacheOnceRequest时validTime才有短时效(非永久有效)意义
  @param validTime 缓存有效时间(秒)  0或CacheValidTimeForever为永久有效
  @param cacheComp 缓存数据结果
  @param respComp 网络请求数据结果
@@ -179,12 +179,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param images 图片数组
  @param imageScale 图片压缩比例  0-1  默认1
  @param imageFileName 图片文件名 不传默认为当前时间 最终处理为名称+当前图片的index
- @param name 图片对应服务器上的字段
+ @param name 图片对应服务器上的字段 不传默认file
  @param imageType 图片文件类型  png/jpg/jpeg等  不传默认jpeg
  @param progress 上传进度
  @param comp 上传结果
  */
-+ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nonnull)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
 /**
  文件上传 根据文件路径 filePath

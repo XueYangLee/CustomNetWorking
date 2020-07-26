@@ -136,7 +136,7 @@
         }];
         
     }else if (cachePolicy == CachePolicyOnlyCacheOnceRequest) {
-        //仅返回缓存数据而不请求网络，数据第一次请求或缓存失效的情况下再从网络请求数据并缓存
+        //仅返回缓存数据而不请求网络，数据第一次请求或缓存失效的情况下才会从网络请求数据并缓存一次
         __weak typeof(self) weakSelf = self;
         [CustomNetWorkCache getRespCacheWithURL:URLString parameters:parameters validTime:validTime completion:^(id  _Nullable cacheData) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -210,7 +210,7 @@
 
 
 #pragma mark - 图片上传
-+ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nonnull)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     
     if (imageScale == 0 || imageScale > 1) {
         imageScale = 1.0;
@@ -224,7 +224,7 @@
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
-            [formData appendPartWithFileData:imageData name:name fileName:[NSString stringWithFormat:@"%@%ld.%@",imageFileName, idx, imageType?imageType:@"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@",imageType?imageType:@"jpeg"]];
+            [formData appendPartWithFileData:imageData name:name?name:@"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType?imageType:@"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType?imageType:@"jpeg"]];
         }];
     } progress:progress completion:comp];
 }
