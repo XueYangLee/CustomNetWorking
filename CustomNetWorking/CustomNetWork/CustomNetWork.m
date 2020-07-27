@@ -51,6 +51,10 @@
     [CustomNetWorkCache removeAllCache];
 }
 
++ (void)removeAllCacheWithCompletion:(void(^_Nullable)(void))comp {
+    [CustomNetWorkCache removeAllCacheWithCompletion:comp];
+}
+
 #pragma mark - 基础数据请求快捷方式
 + (NSURLSessionDataTask *_Nullable)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp {
     return [self dataTaskWithRequestMethod:RequestMethodGET URL:URLString parameters:parameters completion:respComp];
@@ -202,6 +206,7 @@
             
             respComp ? respComp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
         }
+        
     }];
     [dataTask resume];
 
@@ -259,7 +264,10 @@
     NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:parameters constructingBodyWithBlock:formData error:nil];
     
     __block NSURLSessionDataTask *task = [[CustomNetWorkManager sharedManager].sessionManager uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
-        progress ? progress(uploadProgress, uploadProgress.fractionCompleted) : nil;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            progress ? progress(uploadProgress, uploadProgress.fractionCompleted) : nil;
+        });
+        
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             [CustomNetWorkRequestLog disposeError:error sessionTask:task];
@@ -272,6 +280,7 @@
             
             comp ? comp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
         }
+        
     }];
     [task resume];
     
@@ -280,29 +289,49 @@
 
 
 #pragma mark - 文件资源下载
-+ (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
++ (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
     
     if (!URLString) {
         URLString = @"";
     }
+    
+    NSString *downloadDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:folderName?folderName:@"Download"];//拼接缓存目录
+    NSString *fileName = URLString.lastPathComponent;
+    NSString *downloadPath = [downloadDirectory stringByAppendingPathComponent:fileName];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];//打开文件管理器
+    BOOL fileExist = [fileManager fileExistsAtPath:downloadPath];
+    if (fileExist) {
+        comp ? comp(YES, [NSString stringWithFormat:@"file://%@",downloadPath], nil) : nil;
+        return nil;
+    }
+    BOOL folderExist = [fileManager fileExistsAtPath:downloadDirectory];
+    if (folderExist) {
+        [fileManager createDirectoryAtPath:downloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];//创建Download目录
+    }
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
     
     __block NSURLSessionDownloadTask *downloadTask = [[CustomNetWorkManager sharedManager].sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
-        progress ? progress(downloadProgress, downloadProgress.fractionCompleted) : nil;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            progress ? progress(downloadProgress, downloadProgress.fractionCompleted) : nil;
+        });
+        
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+        return [NSURL fileURLWithPath:downloadPath];//返回文件位置的URL路径
+        
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         if (error) {
             [CustomNetWorkRequestLog disposeError:error sessionTask:downloadTask];
             [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:nil error:error];
             
-            comp ? comp(NO, nil) : nil;
+            comp ? comp(NO, nil, response) : nil;
         }else {
-            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteURL] error:nil];
+            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteString] error:nil];
             
-            comp ? comp(YES, filePath) : nil;
+            comp ? comp(YES, filePath.absoluteString, response) : nil;
         }
+        
     }];
     [downloadTask resume];
     

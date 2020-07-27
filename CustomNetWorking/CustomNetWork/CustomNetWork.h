@@ -81,7 +81,7 @@ typedef void(^CustomNetWorkProgress)(NSProgress * _Nonnull progress, double prog
 typedef void(^CustomNetWorkUploadFormData)(id<AFMultipartFormData>  _Nonnull formData);
 
 /** 文件资源下载结果回调 */
-typedef void(^CustomNetWorkDownloadComp)(BOOL success, NSURL * _Nullable filePath);
+typedef void(^CustomNetWorkDownloadComp)(BOOL success, NSString * _Nullable filePath ,NSURLResponse * _Nullable response);
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -102,7 +102,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)cacheSize;
 /** 移除所有请求的数据缓存 */
 + (void)removeAllCache;
-
+/** 移除所有网络请求数据缓存带结果回调 */
++ (void)removeAllCacheWithCompletion:(void(^_Nullable)(void))comp;
 
 
 
@@ -223,6 +224,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *_Nullable)uploadWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
+
+
+
+/**
+ 文件资源下载
+ 
+ @param URLString 下载资源的URL
+ @param folderName 下载资源的自定义保存目录文件夹名  传nil则保存至默认目录
+ @param progress 下载进度
+ @param comp 下载结果
+ */
++ (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
 
 @end
 

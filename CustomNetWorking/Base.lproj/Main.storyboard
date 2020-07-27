@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -72,22 +72,114 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="普通下载" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q1N-XC-Ij2">
+                                <rect key="frame" x="15" y="304.5" width="58" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9p-kB-aUf">
+                                <rect key="frame" x="88" y="298.5" width="30" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="下载"/>
+                                <state key="selected" title="停止"/>
+                                <connections>
+                                    <action selector="normalDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z0K-aA-5Co"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="断点下载" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w87-LG-xeQ">
+                                <rect key="frame" x="15" y="383.5" width="58" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Go3-0F-gcy">
+                                <rect key="frame" x="88" y="377.5" width="30" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="下载"/>
+                                <state key="selected" title="暂停"/>
+                                <connections>
+                                    <action selector="resumeDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nDR-lr-oci"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p8D-Oc-tbL">
+                                <rect key="frame" x="15" y="351.5" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Nds-Cv-t9o"/>
+                                    <constraint firstAttribute="height" constant="2" id="yc7-sf-gt3"/>
+                                </constraints>
+                            </progressView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsJ-6b-sei">
+                                <rect key="frame" x="15" y="430.5" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="ZI9-hl-s6r"/>
+                                    <constraint firstAttribute="width" constant="150" id="czc-NP-xwd"/>
+                                </constraints>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmM-nc-prN">
+                                <rect key="frame" x="180" y="345" width="18" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6O-AG-Jyt">
+                                <rect key="frame" x="180" y="424" width="18" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2G-Ar-IzG">
+                                <rect key="frame" x="148" y="298.5" width="115" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="删除所下载的文件"/>
+                                <connections>
+                                    <action selector="removeNormalDownloadFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Prx-1B-UOq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2s-8T-Uqy">
+                                <rect key="frame" x="148" y="377.5" width="115" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="删除所下载的文件"/>
+                                <connections>
+                                    <action selector="removeResumeDownloadFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BUc-dF-aEe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="fqC-qg-aV5" firstAttribute="top" secondItem="r7z-hl-lUl" secondAttribute="bottom" constant="15" id="11F-iM-CYC"/>
                             <constraint firstItem="JNB-Cl-nRW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="17F-R1-KjF"/>
+                            <constraint firstItem="A2G-Ar-IzG" firstAttribute="centerY" secondItem="C9p-kB-aUf" secondAttribute="centerY" id="1WS-vy-lml"/>
+                            <constraint firstItem="lsJ-6b-sei" firstAttribute="leading" secondItem="w87-LG-xeQ" secondAttribute="leading" id="3ay-O8-U0X"/>
+                            <constraint firstItem="w87-LG-xeQ" firstAttribute="top" secondItem="p8D-Oc-tbL" secondAttribute="bottom" constant="30" id="4Kb-Yl-3lC"/>
+                            <constraint firstItem="A2G-Ar-IzG" firstAttribute="leading" secondItem="C9p-kB-aUf" secondAttribute="trailing" constant="30" id="587-Nq-i51"/>
                             <constraint firstItem="Zfr-vB-KlM" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="5HH-GI-yIe"/>
                             <constraint firstItem="r7z-hl-lUl" firstAttribute="centerY" secondItem="1sw-9q-fRX" secondAttribute="centerY" id="6hn-I8-Sll"/>
+                            <constraint firstItem="Z2s-8T-Uqy" firstAttribute="leading" secondItem="Go3-0F-gcy" secondAttribute="trailing" constant="30" id="BzG-Gr-bVm"/>
+                            <constraint firstItem="T6O-AG-Jyt" firstAttribute="centerY" secondItem="lsJ-6b-sei" secondAttribute="centerY" id="CKM-dN-XK2"/>
+                            <constraint firstItem="NmM-nc-prN" firstAttribute="centerY" secondItem="p8D-Oc-tbL" secondAttribute="centerY" id="JZr-Fx-rMY"/>
                             <constraint firstItem="WD8-mC-kD5" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="ND5-zK-uRg"/>
+                            <constraint firstItem="p8D-Oc-tbL" firstAttribute="top" secondItem="q1N-XC-Ij2" secondAttribute="bottom" constant="30" id="NgU-K7-gMA"/>
                             <constraint firstItem="1sw-9q-fRX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Oy3-dp-6pl"/>
                             <constraint firstItem="1sw-9q-fRX" firstAttribute="top" secondItem="JNB-Cl-nRW" secondAttribute="bottom" constant="40" id="Px6-L5-8FA"/>
+                            <constraint firstItem="w87-LG-xeQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="UgC-qo-mQM"/>
+                            <constraint firstItem="Go3-0F-gcy" firstAttribute="centerY" secondItem="w87-LG-xeQ" secondAttribute="centerY" id="V5V-ZH-IZd"/>
+                            <constraint firstItem="lsJ-6b-sei" firstAttribute="top" secondItem="w87-LG-xeQ" secondAttribute="bottom" constant="30" id="Wld-BM-ark"/>
                             <constraint firstItem="ddl-UJ-9V1" firstAttribute="leading" secondItem="1sw-9q-fRX" secondAttribute="leading" id="X2B-yB-jKM"/>
+                            <constraint firstItem="Go3-0F-gcy" firstAttribute="leading" secondItem="w87-LG-xeQ" secondAttribute="trailing" constant="15" id="XUR-y4-h5E"/>
                             <constraint firstItem="ddl-UJ-9V1" firstAttribute="top" secondItem="Zfr-vB-KlM" secondAttribute="bottom" constant="10" id="Xaf-lx-uPl"/>
+                            <constraint firstItem="q1N-XC-Ij2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="bUb-D0-M7Q"/>
+                            <constraint firstItem="T6O-AG-Jyt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="180" id="bct-JR-D2S"/>
                             <constraint firstItem="WD8-mC-kD5" firstAttribute="top" secondItem="ddl-UJ-9V1" secondAttribute="bottom" constant="10" id="f88-D2-5hS"/>
+                            <constraint firstItem="C9p-kB-aUf" firstAttribute="centerY" secondItem="q1N-XC-Ij2" secondAttribute="centerY" id="k4m-xC-cSj"/>
                             <constraint firstItem="JNB-Cl-nRW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="k5w-97-VOj"/>
+                            <constraint firstItem="p8D-Oc-tbL" firstAttribute="leading" secondItem="q1N-XC-Ij2" secondAttribute="leading" id="kWz-BJ-3vH"/>
+                            <constraint firstItem="q1N-XC-Ij2" firstAttribute="top" secondItem="WD8-mC-kD5" secondAttribute="bottom" constant="40" id="mIM-vK-Wc9"/>
                             <constraint firstItem="Zfr-vB-KlM" firstAttribute="top" secondItem="1sw-9q-fRX" secondAttribute="bottom" constant="10" id="mif-GQ-gip"/>
+                            <constraint firstItem="Z2s-8T-Uqy" firstAttribute="centerY" secondItem="Go3-0F-gcy" secondAttribute="centerY" id="oS0-RV-O5g"/>
                             <constraint firstItem="Bcb-oG-Tmd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="pqw-O8-mlr"/>
+                            <constraint firstItem="NmM-nc-prN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="180" id="tJn-cQ-Xjd"/>
+                            <constraint firstItem="C9p-kB-aUf" firstAttribute="leading" secondItem="q1N-XC-Ij2" secondAttribute="trailing" constant="15" id="uYB-Xk-Fbb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r7z-hl-lUl" secondAttribute="trailing" constant="15" id="w9l-7Q-06N"/>
                             <constraint firstItem="r7z-hl-lUl" firstAttribute="trailing" secondItem="fqC-qg-aV5" secondAttribute="trailing" id="wCx-ej-2PK"/>
                             <constraint firstItem="Bcb-oG-Tmd" firstAttribute="top" secondItem="JNB-Cl-nRW" secondAttribute="bottom" constant="10" id="xoI-Xr-04X"/>
@@ -98,6 +190,10 @@
                         <outlet property="NetStatusLabel" destination="JNB-Cl-nRW" id="bVG-J3-vpB"/>
                         <outlet property="cacheSizeLabel" destination="r7z-hl-lUl" id="dYG-uc-hMI"/>
                         <outlet property="judgeNetStatusLabel" destination="Bcb-oG-Tmd" id="3F7-98-D8J"/>
+                        <outlet property="normalDownLoadProgress" destination="p8D-Oc-tbL" id="DsU-tF-9nj"/>
+                        <outlet property="normalDownloadLabel" destination="NmM-nc-prN" id="7R8-0L-FYd"/>
+                        <outlet property="resumeDownloadLabel" destination="T6O-AG-Jyt" id="U03-eP-AeJ"/>
+                        <outlet property="resumeDownloadProgress" destination="lsJ-6b-sei" id="CjJ-ri-6tZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

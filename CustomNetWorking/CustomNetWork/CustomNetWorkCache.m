@@ -82,8 +82,13 @@ static YYCache *_dataCache;
 }
 
 + (void)removeAllCache {
-    [_dataCache.diskCache removeAllObjects];
     [_dataCache removeAllObjects];
+}
+
++ (void)removeAllCacheWithCompletion:(void(^_Nullable)(void))comp {
+    [_dataCache removeAllObjectsWithBlock:^{
+        comp ? comp() : nil;
+    }];
 }
 
 #pragma mark - cacheSize
@@ -144,7 +149,9 @@ static YYCache *_dataCache;
 /** 用作过滤参数字典中不必要的参数 (有点请求中类似时间戳等可变内容需要加到参数中而不是请求头中时需过滤此类参数) */
 + (NSDictionary *)filterNeedlessParams:(NSDictionary *)params {
     NSMutableDictionary *filterParams = [NSMutableDictionary dictionaryWithDictionary:params];
-    [filterParams removeObjectsForKeys:[CustomNetWorkManager sharedManager].config.cacheNeedlessParamsForKeys];
+    if ([CustomNetWorkManager sharedManager].config.cacheNeedlessParamsForKeys && [CustomNetWorkManager sharedManager].config.cacheNeedlessParamsForKeys > 0) {
+        [filterParams removeObjectsForKeys:[CustomNetWorkManager sharedManager].config.cacheNeedlessParamsForKeys];
+    }
     return filterParams.copy;
 }
 

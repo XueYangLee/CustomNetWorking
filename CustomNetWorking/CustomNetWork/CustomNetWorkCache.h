@@ -48,6 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 移除所有网络请求数据缓存 */
 + (void)removeAllCache;
 
+/** 移除所有网络请求数据缓存带结果回调 (缓存数据量大时移除缓存会占用线程直到移除结束) */
++ (void)removeAllCacheWithCompletion:(void(^_Nullable)(void))comp;
+
 /** 获取网络缓存的总大小 （bytes 字节） */
 + (NSInteger)getAllCacheSize;
 

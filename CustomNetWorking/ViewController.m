@@ -17,6 +17,15 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *cacheSizeLabel;
 
+@property (weak, nonatomic) IBOutlet UIProgressView *normalDownLoadProgress;
+@property (weak, nonatomic) IBOutlet UILabel *normalDownloadLabel;
+@property (nonatomic,copy) NSString *normalDownloadPath;
+
+@property (weak, nonatomic) IBOutlet UIProgressView *resumeDownloadProgress;
+@property (weak, nonatomic) IBOutlet UILabel *resumeDownloadLabel;
+@property (nonatomic,copy) NSString *resumeDownloadPath;
+
+
 @end
 
 @implementation ViewController
@@ -84,5 +93,42 @@
     self.cacheSizeLabel.text = [NSString stringWithFormat:@"当前缓存大小：%@",[CustomNetWorkCache cacheSize]];
 }
 
+//@"https://file.wchoosemall.com/platform/manager/pic/20190325/7448903938448587.jpg"  @"https://www.apple.com/105/media/cn/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/films/feature/iphone-x-feature-cn-20170912_1280x720h.mp4"
+- (IBAction)normalDownload:(UIButton *)sender {
+    NSURLSessionDownloadTask *task=nil;
+    if (!sender.selected) {
+        task=[CustomNetWork downloadWithURL:@"https://www.apple.com/105/media/cn/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/films/feature/iphone-x-feature-cn-20170912_1280x720h.mp4" folderName:nil progress:^(NSProgress * _Nonnull progress, double progressRate) {
+            self.normalDownLoadProgress.progress=progressRate;
+            self.normalDownloadLabel.text=[NSString stringWithFormat:@"%.f%%",progressRate*100];
+        } completion:^(BOOL success, NSString * _Nullable filePath, NSURLResponse * _Nullable response) {
+            DLog(@"%@*****下载文件路径*",filePath);
+            
+            self.normalDownloadPath=filePath;
+            
+        }];
+    }else{
+        [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            DLog(@"续传的data = %@",resumeData)
+        }];
+        self.normalDownLoadProgress.progress=0;
+        self.normalDownloadLabel.text=@"0%";
+    }
+    sender.selected = !sender.selected;
+}
+
+
+- (IBAction)resumeDownload:(UIButton *)sender {
+    sender.selected = !sender.selected;
+}
+
+
+
+- (IBAction)removeNormalDownloadFile:(UIButton *)sender {
+    [[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.normalDownloadPath] error:nil];
+}
+
+- (IBAction)removeResumeDownloadFile:(UIButton *)sender {
+    [[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.resumeDownloadPath] error:nil];
+}
 
 @end
