@@ -237,6 +237,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
 
+/**
+ 文件资源接续下载  根据保存的data数据继续下载
+ 
+ @param resumeData 用于继续下载的data数据
+ @param folderName 下载资源的自定义保存目录文件夹名  传nil则保存至默认目录
+ @param progress 下载进度
+ @param comp 下载结果
+ */
++ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
+
 @end
 
 NS_ASSUME_NONNULL_END

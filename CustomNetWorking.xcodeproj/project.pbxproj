@@ -27,7 +27,6 @@
 		F19DBF3324A5A5C700DC83E7 /* CustomNetWorkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3224A5A5C700DC83E7 /* CustomNetWorkCache.m */; };
 		F19DBF3624A5A67B00DC83E7 /* CustomNetWorkResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */; };
 		F19DBF3924A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */; };
-		F19DBF3C24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */; };
 		F19DBF3F24A5A73B00DC83E7 /* CustomNetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */; };
 		F19DBF4224A5A75300DC83E7 /* CustomNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DBF4124A5A75300DC83E7 /* CustomNetWork.m */; };
 /* End PBXBuildFile section */
@@ -73,8 +72,6 @@
 		F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkResponseObject.m; sourceTree = "<group>"; };
 		F19DBF3724A5A6BF00DC83E7 /* CustomNetWorkRequestLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkRequestLog.h; sourceTree = "<group>"; };
 		F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkRequestLog.m; sourceTree = "<group>"; };
-		F19DBF3A24A5A72100DC83E7 /* CustomNetWorkBaseRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkBaseRequest.h; sourceTree = "<group>"; };
-		F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkBaseRequest.m; sourceTree = "<group>"; };
 		F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkManager.h; sourceTree = "<group>"; };
 		F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkManager.m; sourceTree = "<group>"; };
 		F19DBF4024A5A75300DC83E7 /* CustomNetWork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWork.h; sourceTree = "<group>"; };
@@ -189,8 +186,6 @@
 				F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */,
 				F156D4C924A70DCA009AF8B6 /* CustomNetWorkConfig.h */,
 				F156D4CA24A70DCA009AF8B6 /* CustomNetWorkConfig.m */,
-				F19DBF3A24A5A72100DC83E7 /* CustomNetWorkBaseRequest.h */,
-				F19DBF3B24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m */,
 				F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */,
 				F19DBF3E24A5A73B00DC83E7 /* CustomNetWorkManager.m */,
 				F19DBF4024A5A75300DC83E7 /* CustomNetWork.h */,
@@ -304,7 +299,6 @@
 				F19DBF4224A5A75300DC83E7 /* CustomNetWork.m in Sources */,
 				F156D4CE24A70E39009AF8B6 /* NetRequestConfig.m in Sources */,
 				F19DBF3F24A5A73B00DC83E7 /* CustomNetWorkManager.m in Sources */,
-				F19DBF3C24A5A72100DC83E7 /* CustomNetWorkBaseRequest.m in Sources */,
 				F19DBF3624A5A67B00DC83E7 /* CustomNetWorkResponseObject.m in Sources */,
 				F19DBF1F24A5A1E800DC83E7 /* ViewController.m in Sources */,
 				F19DBF1924A5A1E800DC83E7 /* AppDelegate.m in Sources */,

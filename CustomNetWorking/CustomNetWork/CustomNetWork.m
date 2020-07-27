@@ -229,7 +229,7 @@
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
-            [formData appendPartWithFileData:imageData name:name?name:@"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType?imageType:@"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType?imageType:@"jpeg"]];
+            [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType ? imageType : @"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
         }];
     } progress:progress completion:comp];
 }
@@ -238,7 +238,7 @@
 + (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSError *error = nil;
-        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name?name:@"file" error:&error];
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name ? name : @"file" error:&error];
         if (error) {
             [CustomNetWorkRequestLog logWithSessionTask:nil responseObj:nil error:error];
             comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
@@ -249,7 +249,7 @@
 #pragma mark - 文件上传 fileData
 + (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:fileData name:name?name:@"file" fileName:fileName mimeType:mimeType?mimeType:@"form-data"];
+        [formData appendPartWithFileData:fileData name:name ? name : @"file" fileName:fileName mimeType:mimeType ? mimeType : @"form-data"];
     } progress:progress completion:comp];
 }
 
@@ -295,7 +295,7 @@
         URLString = @"";
     }
     
-    NSString *downloadDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:folderName?folderName:@"Download"];//拼接缓存目录
+    NSString *downloadDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:folderName ? folderName : @"Download"];//拼接缓存目录
     NSString *fileName = URLString.lastPathComponent;
     NSString *downloadPath = [downloadDirectory stringByAppendingPathComponent:fileName];
     
@@ -332,6 +332,40 @@
             comp ? comp(YES, filePath.absoluteString, response) : nil;
         }
         
+    }];
+    [downloadTask resume];
+    
+    return downloadTask;
+}
+
++ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
+    
+    __block NSURLSessionDownloadTask *downloadTask = [[CustomNetWorkManager sharedManager].sessionManager downloadTaskWithResumeData:resumeData progress:^(NSProgress * _Nonnull downloadProgress) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            progress ? progress(downloadProgress, downloadProgress.fractionCompleted) : nil;
+        });
+        
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSString *downloadDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:folderName ? folderName : @"Download"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];//打开文件管理器
+        BOOL folderExist = [fileManager fileExistsAtPath:downloadDirectory];
+        if (folderExist) {
+            [fileManager createDirectoryAtPath:downloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];//创建Download目录
+        }
+        NSString *filePath = [downloadDirectory stringByAppendingPathComponent:response.suggestedFilename];//拼接文件路径
+        return [NSURL fileURLWithPath:filePath];//返回文件位置的URL路径
+        
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        if (error) {
+            [CustomNetWorkRequestLog disposeError:error sessionTask:downloadTask];
+            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:nil error:error];
+            
+            comp ? comp(NO, nil, response) : nil;
+        }else {
+            [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteString] error:nil];
+            
+            comp ? comp(YES, filePath.absoluteString, response) : nil;
+        }
     }];
     [downloadTask resume];
     
