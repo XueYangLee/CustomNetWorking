@@ -8,13 +8,7 @@
 //此处不用单例原因 如果为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出；如果实例化的对象长时间不被利用，系统会认为是垃圾而被回收，这将导致对象状态的丢失
 
 #import "CustomNetWorkCache.h"
-
-#if __has_include(<AFNetworking/AFNetworking.h>)
-#import <YYCache/YYCache.h>
-#else
 #import "YYCache.h"
-#endif
-
 #import "CustomNetWorkManager.h"
 
 static NSString *const CustomNetWorkRespObjCache = @"CustomNetWorkRespObjCache";

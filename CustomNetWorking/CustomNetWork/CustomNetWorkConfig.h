@@ -7,12 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#if __has_include(<AFNetworking/AFNetworking.h>)
-#import <AFNetworking/AFNetworking.h>
-#else
 #import "AFNetworking.h"
-#endif
 
 /** 数据请求格式 */
 typedef NS_ENUM(NSUInteger, CustomRequestSerializer) {
