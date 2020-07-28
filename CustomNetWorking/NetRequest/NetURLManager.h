@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define APIString(URLPath) [NetURLManager URLForPath:URLPath]
+
 typedef enum : NSUInteger {
     NetURLModeProduct,//线上正式生产环境
     NetURLModeDev,//开发环境
@@ -23,7 +25,7 @@ typedef enum : NSUInteger {
 + (NSString *)currentHostURL;
 
 /** 当前环境下完整的请求路径  拼接path*/
-+ (NSString *)URLForPath:(NSString *)urlPath;
++ (NSString *)URLForPath:(NSString *_Nullable)urlPath;
 
 @end
 

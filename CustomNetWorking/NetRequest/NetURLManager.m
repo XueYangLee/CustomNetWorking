@@ -22,7 +22,8 @@
     NSString *hostURL=@"";
     switch ([NetURLManager currentURLMode]) {
         case NetURLModeProduct:
-            hostURL=@"https://www.xxx.xxx";
+//            hostURL=@"https://www.xxx.xxx";
+            hostURL=@"http://apis.juhe.cn/simpleWeather/query";
             break;
             
         case NetURLModeDev:
@@ -37,11 +38,11 @@
 
 
 
-+ (NSString *)URLForPath:(NSString *)urlPath{
++ (NSString *)URLForPath:(NSString *_Nullable)urlPath{
     return [NetURLManager mergeURLWithHost:[NetURLManager currentHostURL] path:urlPath];
 }
 
-+ (NSString *)mergeURLWithHost:(NSString *)host path:(NSString *)path{
++ (NSString *)mergeURLWithHost:(NSString *)host path:(NSString *_Nullable)path{
     if (path.length==0) {
         return host;
     }
