@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
+#import <AFNetworking/AFNetworking.h>
 #import "CustomNetWorkConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
