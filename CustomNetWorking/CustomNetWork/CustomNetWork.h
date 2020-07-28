@@ -81,7 +81,7 @@ typedef void(^CustomNetWorkProgress)(NSProgress * _Nonnull progress, double prog
 typedef void(^CustomNetWorkUploadFormData)(id<AFMultipartFormData>  _Nonnull formData);
 
 /** 文件资源下载结果回调 */
-typedef void(^CustomNetWorkDownloadComp)(BOOL success, NSString * _Nullable filePath ,NSURLResponse * _Nullable response);
+typedef void(^CustomNetWorkDownloadComp)(NSURLResponse * _Nullable response, NSString * _Nullable filePath, NSError * _Nullable error);
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -233,7 +233,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param URLString 下载资源的URL
  @param folderName 下载资源的自定义保存目录文件夹名  传nil则保存至默认目录
  @param progress 下载进度
- @param comp 下载结果
+ @param comp 下载结果 error存在即代表下载停止或失败
  */
 + (NSURLSessionDownloadTask *_Nullable)downloadWithURL:(NSString *_Nullable)URLString folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
 
@@ -243,9 +243,20 @@ NS_ASSUME_NONNULL_BEGIN
  @param resumeData 用于继续下载的data数据
  @param folderName 下载资源的自定义保存目录文件夹名  传nil则保存至默认目录
  @param progress 下载进度
- @param comp 下载结果
+ @param comp 下载结果 error存在即代表下载停止或失败
  */
-+ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
++ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *_Nonnull)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
+
+/**
+ 文件资源断点下载
+ 
+ @param URLString 下载资源的URL
+ @param resumeData 用于断点继续下载的data数据
+ @param folderName 下载资源的自定义保存目录文件夹名  传nil则保存至默认目录
+ @param progress 下载进度
+ @param comp 下载结果 error存在即代表下载停止或失败
+ */
++ (NSURLSessionDownloadTask *_Nullable)downloadResumeWithURL:(NSString *_Nullable)URLString ResumeData:(NSData *_Nullable)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp;
 
 @end
 

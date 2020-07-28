@@ -229,7 +229,7 @@
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
-            [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType ? imageType : @"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
+            [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType ? imageType : @"jpg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
         }];
     } progress:progress completion:comp];
 }
@@ -302,7 +302,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];//打开文件管理器
     BOOL fileExist = [fileManager fileExistsAtPath:downloadPath];
     if (fileExist) {
-        comp ? comp(YES, [NSString stringWithFormat:@"file://%@",downloadPath], nil) : nil;
+        comp ? comp(nil, [NSString stringWithFormat:@"file://%@",downloadPath], nil) : nil;
         return nil;
     }
     BOOL folderExist = [fileManager fileExistsAtPath:downloadDirectory];
@@ -324,13 +324,10 @@
         if (error) {
             [CustomNetWorkRequestLog disposeError:error sessionTask:downloadTask];
             [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:nil error:error];
-            
-            comp ? comp(NO, nil, response) : nil;
         }else {
             [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteString] error:nil];
-            
-            comp ? comp(YES, filePath.absoluteString, response) : nil;
         }
+        comp ? comp(response, filePath.absoluteString, error) : nil;
         
     }];
     [downloadTask resume];
@@ -338,7 +335,8 @@
     return downloadTask;
 }
 
-+ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
+#pragma mark - 文件资源接续下载  根据保存的data数据继续下载
++ (NSURLSessionDownloadTask *_Nullable)downloadWithResumeData:(NSData *_Nonnull)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
     
     __block NSURLSessionDownloadTask *downloadTask = [[CustomNetWorkManager sharedManager].sessionManager downloadTaskWithResumeData:resumeData progress:^(NSProgress * _Nonnull downloadProgress) {
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -359,15 +357,30 @@
         if (error) {
             [CustomNetWorkRequestLog disposeError:error sessionTask:downloadTask];
             [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:nil error:error];
-            
-            comp ? comp(NO, nil, response) : nil;
         }else {
             [CustomNetWorkRequestLog logWithSessionTask:downloadTask responseObj:[NSString stringWithFormat:@"下载成功：\n文件路径*****\n%@\n*", filePath.absoluteString] error:nil];
-            
-            comp ? comp(YES, filePath.absoluteString, response) : nil;
         }
+        comp ? comp(response, filePath.absoluteString, error) : nil;
+        
     }];
     [downloadTask resume];
+    
+    return downloadTask;
+}
+
+#pragma mark 断点下载
++ (NSURLSessionDownloadTask *_Nullable)downloadResumeWithURL:(NSString *_Nullable)URLString ResumeData:(NSData *_Nullable)resumeData folderName:(NSString *_Nullable)folderName progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkDownloadComp _Nullable )comp {
+    
+    if (!URLString) {
+        URLString = @"";
+    }
+    
+    NSURLSessionDownloadTask *downloadTask = nil;
+    if (resumeData.length > 0) {//存在已下载任务 继续下载
+        downloadTask = [self downloadWithResumeData:resumeData folderName:folderName progress:progress completion:comp];
+    }else {//新任务下载
+        downloadTask= [self downloadWithURL:URLString folderName:folderName progress:progress completion:comp];
+    }
     
     return downloadTask;
 }
