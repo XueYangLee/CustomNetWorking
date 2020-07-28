@@ -24,8 +24,7 @@ Pod::Spec.new do |spec|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = <<-DESC
-                   DESC
+  spec.description  = "AFNetWorking二次封装（数据请求、数据缓存、数据文件上传、数据文件下载、数据文件断点下载），支持自定义配置，支持YYCache进行数据缓存处理"
 
   spec.homepage     = "https://github.com/XueYangLee/CustomNetWorking"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
