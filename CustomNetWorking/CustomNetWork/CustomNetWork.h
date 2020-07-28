@@ -106,6 +106,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)removeAllCacheWithCompletion:(void(^_Nullable)(void))comp;
 
 
+/** 取消调用此方法前所有的网络请求 */
++ (void)cancelAllRequest;
+
+/**
+ 取消所有网络请求并关闭session 不可再发请求（一般情况下无此方法调用需求 取消请求调用cancelAllRequest即可）
+ 
+ @param cancelPendingTasks 是否结束所有未完成的请求会话 YES取消所有会话并使session失效 NO允许未完成的请求结束并使session失效
+ @param resetSession 是否重置session会话，无特殊需求不需重置 设置NO即可
+ */
++ (void)cancelAllRequestStopSessionWithCancelingTasks:(BOOL)cancelPendingTasks resetSession:(BOOL)resetSession;
+
 
 /** GET 数据请求 */
 + (NSURLSessionDataTask *_Nullable)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp;

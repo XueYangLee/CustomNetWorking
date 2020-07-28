@@ -55,6 +55,17 @@
     [CustomNetWorkCache removeAllCacheWithCompletion:comp];
 }
 
+#pragma mark - 取消请求
++ (void)cancelAllRequest {
+    if ([[CustomNetWorkManager sharedManager].sessionManager.tasks count] > 0) {
+        [[CustomNetWorkManager sharedManager].sessionManager.tasks makeObjectsPerformSelector:@selector(cancel)];//执行cancel后，tasks就会清空，网络请求会进入失败的状态，然后响应failure block，得到一个error的信息，表示请求已经成功取消了 Error Domain=NSURLErrorDomain Code=-999 "cancelled" NSLocalizedDescription=cancelled
+    }
+}
+
++ (void)cancelAllRequestStopSessionWithCancelingTasks:(BOOL)cancelPendingTasks resetSession:(BOOL)resetSession {
+    [[CustomNetWorkManager sharedManager].sessionManager invalidateSessionCancelingTasks:YES resetSession:resetSession];//Error Domain=NSURLErrorDomain Code=-999 "cancelled" NSLocalizedDescription=cancelled
+}
+
 #pragma mark - 基础数据请求快捷方式
 + (NSURLSessionDataTask *_Nullable)GET:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters completion:(CustomNetWorkRespComp _Nullable )respComp {
     return [self dataTaskWithRequestMethod:RequestMethodGET URL:URLString parameters:parameters completion:respComp];

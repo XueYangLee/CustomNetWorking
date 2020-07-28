@@ -25,25 +25,22 @@
     if (self) {
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         
+        if (!_sessionManager) {
+            _sessionManager = [AFHTTPSessionManager manager];
+            _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];//default->AFHTTPRequestSerializer
+            _sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];//default->AFJSONResponseSerializer
+            _sessionManager.requestSerializer.timeoutInterval = 15.f;
+            _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/plain", @"text/javascript", @"text/xml", @"image/*", nil];
+        }
+        
     }
     return self;
-}
-
-- (AFHTTPSessionManager *)sessionManager {
-    if (!_sessionManager) {
-        _sessionManager = [AFHTTPSessionManager manager];
-        _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];//default->AFHTTPRequestSerializer
-        _sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];//default->AFJSONResponseSerializer
-        _sessionManager.requestSerializer.timeoutInterval = 15.f;
-        _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/plain", @"text/javascript", @"text/xml", @"image/*", nil];
-    }
-    return _sessionManager;
 }
 
 - (void)setConfig:(CustomNetWorkConfig *)config {
     _config=config;
     
-    if (config.requestSerializer != CustomRequestSerializerUnknown) {//设置数据请求格式
+    if (config.requestSerializer != CustomRequestSerializerDefault) {//设置数据请求格式
         if (config.requestSerializer == CustomRequestSerializerHTTP) {
             _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
         }else if (config.requestSerializer == CustomRequestSerializerJSON){
@@ -51,7 +48,7 @@
         }
     }
     
-    if (config.responseSerializer != CustomResponseSerializerUnknow) {//设置数据响应格式
+    if (config.responseSerializer != CustomResponseSerializerDefault) {//设置数据响应格式
         if (config.responseSerializer == CustomResponseSerializerHTTP) {
             _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
         }else if (config.responseSerializer == CustomResponseSerializerJSON){

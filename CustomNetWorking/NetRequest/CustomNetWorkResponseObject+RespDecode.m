@@ -28,6 +28,7 @@
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject yy_modelWithJSON:responseObj];
     obj.originalData=responseObj;
     obj.requestSuccess=YES;
+    obj.error=nil;
     
     return obj;
 }
@@ -37,6 +38,7 @@
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject new];
     obj.originalData=error;
     obj.requestSuccess=NO;
+    obj.error=error;
     
     obj.success=NO;
     obj.errorMsg=error.errorMessage;

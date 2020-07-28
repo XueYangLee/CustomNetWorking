@@ -11,8 +11,8 @@
 
 /** 数据请求格式 */
 typedef NS_ENUM(NSUInteger, CustomRequestSerializer) {
-    /** 数据请求格式默认 不做自定义设置 */
-    CustomRequestSerializerUnknown = 0,
+    /** 数据请求格式默认 不做自定义设置  默认HTTP格式 */
+    CustomRequestSerializerDefault = 0,
     /** 设置数据请求格式为HTTP */
     CustomRequestSerializerHTTP,
     /** 设置数据请求格式为JSON */
@@ -21,8 +21,8 @@ typedef NS_ENUM(NSUInteger, CustomRequestSerializer) {
 
 /** 数据响应格式 */
 typedef NS_ENUM(NSUInteger, CustomResponseSerializer) {
-    /** 数据响应格式默认 不做自定义设置 */
-    CustomResponseSerializerUnknow = 0,
+    /** 数据响应格式默认 不做自定义设置  默认JSON格式 */
+    CustomResponseSerializerDefault = 0,
     /** 设置数据响应格式为HTTP */
     CustomResponseSerializerHTTP,
     /** 设置数据响应格式为JSON */
