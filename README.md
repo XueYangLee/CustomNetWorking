@@ -2,6 +2,15 @@
  **AFNetWorking二次封装（数据请求、数据缓存、数据文件上传、数据文件下载、数据文件断点下载），支持自定义配置，支持YYCache进行数据缓存处理** 
 
 ![https://github.com/XueYangLee/CustomNetWorking/blob/master/example.png](https://github.com/XueYangLee/CustomNetWorking/blob/master/example.png)
+
+##### 导入方式
+- pods导入
+```
+pod 'CustomNetWorking'
+```
+- 手动导入
+直接拖拽 ` CustomNetWork ` 文件夹至你的项目
+
 ##### 使用方法
 初始网络统一配置，若不做网络配置初始化则一切按照默认设置运行
 ```
