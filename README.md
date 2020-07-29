@@ -12,9 +12,9 @@ pod 'CustomNetWorking'
 
 直接拖拽 ` CustomNetWork ` 文件夹至你的项目
 
-    * 项目中需要添加请求头或请求公共参数是必须新建 ` CustomNetWorkConfig ` 的继承方法，或直接拖入 ` NetRequestConfig ` 到你的项目中
-    * 对请求结果统一处理和打印相关可以直接拖入 ` CustomNetWorkResponseObject+RespDecode ` ` CustomNetWorkRequestLog+LogDecode `文件到你的项目
-    * 或直接拖入 ` NetRequest ` 文件夹到你的项目
+* 项目中需要添加请求头或请求公共参数是必须新建 ` CustomNetWorkConfig ` 的继承方法，或直接拖入 ` NetRequestConfig ` 到你的项目中
+* 对请求结果统一处理和打印相关可以直接拖入 ` CustomNetWorkResponseObject+RespDecode ` ` CustomNetWorkRequestLog+LogDecode `文件到你的项目
+* 或直接拖入 ` NetRequest ` 文件夹到你的项目
 
 ##### 引用
 ```
