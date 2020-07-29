@@ -4,7 +4,7 @@
 //
 //  Created by 李雪阳 on 2020/6/27.
 //  Copyright © 2020 XueYangLee. All rights reserved.
-//
+//  !!!!!此分类可直接拖入项目中添加自定义项!!!!!
 
 #import "CustomNetWorkResponseObject+RespDecode.h"
 #import "NSObject+SwizzleMethod.h"
