@@ -10,7 +10,7 @@
 
 @implementation NetRequestConfig
 
-- (NSMutableDictionary *)requestHeader{
+- (NSMutableDictionary<NSString *,NSString *> *)requestHeader{
     NSMutableDictionary *dic=[NSMutableDictionary dictionary];
     
     NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]?:@"";
@@ -18,6 +18,20 @@
     
     NSString *metaData = [NSString stringWithFormat:@"AppStore_iOS_%@",currentVersion];
     [dic setObject:metaData forKey:@"Metadata"];
+    
+    return dic;
+}
+
+- (NSMutableDictionary<NSString *,NSString *> *)requestMutableHeader{
+    NSMutableDictionary *dic=[NSMutableDictionary dictionary];
+    
+    if ((arc4random() % 4)!=0) {
+        [dic setObject:[NSString stringWithFormat:@"%d",arc4random() % 10] forKey:@"count"];
+    }
+    
+    if ((arc4random() % 4)!=0) {
+        [dic setObject:[NSString stringWithFormat:@"%d",arc4random() % 10] forKey:@"number"];
+    }
     
     return dic;
 }

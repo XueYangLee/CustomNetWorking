@@ -64,7 +64,7 @@
         [_sessionManager.requestSerializer setValue:config.userAgentForHeader forHTTPHeaderField:@"User-Agent"];
     }
     
-    if (config.requestHeader && config.requestHeader.count > 0) {//设置请求头
+    if (config.requestHeader && config.requestHeader.count > 0) {//设置请求头 如版本号或机器码等固定不变的值
         for (NSString *key in config.requestHeader) {
             id value = config.requestHeader[key];
             [_sessionManager.requestSerializer setValue:value forHTTPHeaderField:key];

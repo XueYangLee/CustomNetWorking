@@ -201,9 +201,11 @@
     if (!URLString) {
         URLString = @"";
     }
-    parameters = [self disposeParameters:parameters];
+    parameters = [self disposePublicParameters:parameters];//公共参数添加
     
     NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer requestWithMethod:[self requestTypeWithMethod:method] URLString:URLString parameters:parameters error:nil];
+    
+    [self disposeRequestMutableHeaderField:request];//可变请求头添加
     
     __block NSURLSessionDataTask *dataTask = [[CustomNetWorkManager sharedManager].sessionManager dataTaskWithRequest:request uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
         if (error) {
@@ -242,6 +244,7 @@
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
             [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType ? imageType : @"jpg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
         }];
+        
     } progress:progress completion:comp];
 }
 
@@ -254,6 +257,7 @@
             [CustomNetWorkRequestLog logWithSessionTask:nil responseObj:nil error:error];
             comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
         }
+        
     } progress:progress completion:comp];
 }
 
@@ -261,6 +265,7 @@
 + (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:fileData name:name ? name : @"file" fileName:fileName mimeType:mimeType ? mimeType : @"form-data"];
+        
     } progress:progress completion:comp];
 }
 
@@ -270,9 +275,11 @@
     if (!URLString) {
         URLString = @"";
     }
-    parameters = [self disposeParameters:parameters];
+    parameters = [self disposePublicParameters:parameters];//公共参数添加
     
     NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:parameters constructingBodyWithBlock:formData error:nil];
+    
+    [self disposeRequestMutableHeaderField:request];//可变请求头添加
     
     __block NSURLSessionDataTask *task = [[CustomNetWorkManager sharedManager].sessionManager uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -398,12 +405,22 @@
 
 
 #pragma mark - 参数处理 添加公共参数♻️
-+ (NSDictionary *)disposeParameters:(NSDictionary *)parameters {
++ (NSDictionary *)disposePublicParameters:(NSDictionary *)parameters {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([CustomNetWorkManager sharedManager].config.publicParams && [CustomNetWorkManager sharedManager].config.publicParams.count > 0) {
         [params addEntriesFromDictionary:[CustomNetWorkManager sharedManager].config.publicParams];//添加公共参数
     }
     return params.copy;
+}
+
+#pragma mark - 请求头处理 添加可变请求头 （如token、时间及用户信息）♻️
++ (void)disposeRequestMutableHeaderField:(NSMutableURLRequest *)request {
+    if ([CustomNetWorkManager sharedManager].config.requestMutableHeader && [CustomNetWorkManager sharedManager].config.requestMutableHeader.count > 0) {
+        for (NSString *key in [CustomNetWorkManager sharedManager].config.requestMutableHeader) {
+            id value = [CustomNetWorkManager sharedManager].config.requestMutableHeader[key];
+            [request setValue:value forHTTPHeaderField:key];
+        }
+    }
 }
 
 #pragma mark - 请求方式处理♻️

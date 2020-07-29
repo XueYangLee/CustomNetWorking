@@ -46,8 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** 数据请求头的User-Agent */
 @property (nonatomic,strong) NSString *userAgentForHeader;
 
-/** 数据请求的请求头 */
-@property (nonatomic,strong) NSMutableDictionary *requestHeader;
+/** 数据请求的请求头 若存在token、时间或user信息等会改变的值需调用requestMutableHeader */
+@property (nonatomic,strong) NSMutableDictionary <NSString *, NSString *> *requestHeader;
+
+/** 数据请求的可变请求头 如token、时间或user信息等会改变的值  若都是如版本号或机器码等固定不变的值调用requestHeader即可 */
+@property (nonatomic,strong) NSMutableDictionary <NSString *, NSString *> *requestMutableHeader;
 
 /** 数据请求的公共参数 参数相同会覆盖 */
 @property (nonatomic,strong) NSMutableDictionary *publicParams;
