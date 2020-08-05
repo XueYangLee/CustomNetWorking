@@ -238,7 +238,7 @@
     return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
-            [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%ld.%@", imageFileName, idx, imageType ? imageType : @"jpg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
+            [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%lu.%@", imageFileName, (unsigned long)idx, imageType ? imageType : @"jpg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
         }];
         
     } progress:progress completion:comp];
