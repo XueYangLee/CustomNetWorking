@@ -23,7 +23,8 @@
     
 }
 
-
+#pragma mark - 数据处理模板 其他自定义项自行添加
+/** 数据请求成功的处理 */
 + (CustomNetWorkResponseObject *)swizzle_createDataWithResponse:(id)responseObj{
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject yy_modelWithJSON:responseObj];
     obj.originalData=responseObj;
@@ -33,7 +34,7 @@
     return obj;
 }
 
-
+/** 数据请求失败的处理 */
 + (CustomNetWorkResponseObject *)swizzle_createErrorDataWithError:(NSError *)error{
     CustomNetWorkResponseObject *obj=[CustomNetWorkResponseObject new];
     obj.originalData=error;
@@ -44,5 +45,6 @@
     obj.errorMsg=error.errorMessage;
     return obj;
 }
+#pragma mark 数据处理模板 其他自定义项自行添加 -
 
 @end

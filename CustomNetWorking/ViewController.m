@@ -88,8 +88,8 @@
             DLog(@"%@*****请求结果*",respObj.result)
         }];
     }else if (sender.tag == 12) {//缓存请求  集合返回
-        [CustomNetWork requestWithMethod:RequestMethodGET URL:REQUEST_URL parameters:@{@"city":@"广州"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeForever completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-            DLog(@"%@*****数据结果（缓存）*",respObj.result)
+        [CustomNetWork requestWithMethod:RequestMethodGET URL:REQUEST_URL parameters:@{@"city":@"广州"} cachePolicy:CachePolicyMainCacheSaveRequest cacheValidTime:CacheValidTimeForever completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
+            DLog(@"%@*****数据结果（缓存）(源数据)*",respObj.originalData)
         }];
     }else if (sender.tag == 13) {//缓存请求  集合返回
         [CustomNetWork GET:APIString(nil) parameters:@{@"city":@"深圳"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeDay completion:^(CustomNetWorkResponseObject * _Nullable respObj) {

@@ -118,11 +118,7 @@
 
 #pragma mark - 数据请求+数据缓存 结果统一返回
 + (void)requestWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters cachePolicy:(CustomNetWorkCachePolicy)cachePolicy cacheValidTime:(NSTimeInterval)validTime completion:(CustomNetWorkResultComp _Nullable )comp {
-    [self requestWithMethod:method URL:URLString parameters:parameters cachePolicy:cachePolicy cacheValidTime:validTime cacheComp:^(CustomNetWorkResponseObject * _Nullable respObj) {
-        comp ? comp(respObj) : nil;
-    } respComp:^(CustomNetWorkResponseObject * _Nullable respObj) {
-        comp ? comp(respObj) : nil;
-    }];
+    [self requestWithMethod:method URL:URLString parameters:parameters cachePolicy:cachePolicy cacheValidTime:validTime cacheComp:comp respComp:comp];
 }
 
 #pragma mark - 数据请求+数据缓存 核心方法⚠️

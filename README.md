@@ -13,8 +13,8 @@ pod 'CustomNetWorking'
 直接拖拽 ` CustomNetWork ` 文件夹至你的项目
 
 * 项目中需要添加请求头或请求公共参数是必须新建 ` CustomNetWorkConfig ` 的继承方法，或直接拖入 ` NetRequestConfig ` 到你的项目中
-* 对请求结果统一处理和打印相关可以直接拖入 ` CustomNetWorkResponseObject+RespDecode ` ` CustomNetWorkRequestLog+LogDecode `文件到你的项目
-* 或直接拖入 ` NetRequest ` 文件夹到你的项目
+* 对请求结果统一处理和打印相关可以直接拖入 ` CustomNetWorkResponseObject+RespDecode ` ` CustomNetWorkRequestLog+LogDecode `文件到你的项目，或直接拖入 ` NetRequest ` 文件夹到你的项目
+
 
 ##### 引用
 ```
@@ -38,17 +38,17 @@ if (sender.tag == 10) {//无缓存请求
         DLog(@"%@*****GET请求结果*",respObj.result)
     }];
 }else if (sender.tag == 11) {//缓存请求  分开返回
-    [CustomNetWork requestWithMethod:RequestMethodGET URL:REQUEST_URL parameters:@{@"city":@"上海"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:10 cacheComp:^(CustomNetWorkResponseObject * _Nullable respObj) {
+    [CustomNetWork requestWithMethod:RequestMethodGET URL:APIString(nil) parameters:@{@"city":@"上海"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:10 cacheComp:^(CustomNetWorkResponseObject * _Nullable respObj) {
         DLog(@"%@*****缓存结果*",respObj.result)
     } respComp:^(CustomNetWorkResponseObject * _Nullable respObj) {
         DLog(@"%@*****请求结果*",respObj.result)
     }];
 }else if (sender.tag == 12) {//缓存请求  集合返回
-    [CustomNetWork requestWithMethod:RequestMethodGET URL:REQUEST_URL parameters:@{@"city":@"广州"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeForever completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-        DLog(@"%@*****数据结果（缓存）*",respObj.result)
+    [CustomNetWork requestWithMethod:RequestMethodGET URL:REQUEST_URL parameters:@{@"city":@"广州"} cachePolicy:CachePolicyMainCacheSaveRequest cacheValidTime:CacheValidTimeForever completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
+        DLog(@"%@*****数据结果（缓存）(源数据)*",respObj.originalData)
     }];
 }else if (sender.tag == 13) {//缓存请求  集合返回
-    [CustomNetWork GET:REQUEST_URL parameters:@{@"city":@"深圳"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeDay completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
+    [CustomNetWork GET:APIString(nil) parameters:@{@"city":@"深圳"} cachePolicy:CachePolicyOnlyCacheOnceRequest cacheValidTime:CacheValidTimeDay completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
         DLog(@"%@*****GET数据结果（缓存）*",respObj.result)
     }];
 }

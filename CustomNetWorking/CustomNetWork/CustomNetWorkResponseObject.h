@@ -52,12 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
+
 /** 错误信息 */
 @property (nonatomic,strong) NSString *errorMsg;
 
 /** 数据请求失败的error信息 */
 @property (nonatomic,strong) NSError *_Nullable error;
-
 
 
 
