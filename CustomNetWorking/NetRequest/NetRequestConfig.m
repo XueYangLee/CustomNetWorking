@@ -10,6 +10,12 @@
 
 @implementation NetRequestConfig
 
+- (NSMutableDictionary *)publicParams{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"2dca7299f47cae1ada2ab1b864f3ce8c" forKey:@"key"];
+    return dic;
+}
+
 - (NSMutableDictionary<NSString *,NSString *> *)requestHeader{
     NSMutableDictionary *dic=[NSMutableDictionary dictionary];
     
@@ -53,11 +59,5 @@
     securityPolicy.pinnedCertificates = [[NSSet alloc] initWithObjects:cerData, nil];
     return securityPolicy;
 }*/
-
-- (NSMutableDictionary *)publicParams{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@"2dca7299f47cae1ada2ab1b864f3ce8c" forKey:@"key"];
-    return dic;
-}
 
 @end

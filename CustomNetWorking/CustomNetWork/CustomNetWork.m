@@ -134,14 +134,14 @@
         [CustomNetWorkCache getRespCacheWithURL:URLString parameters:parameters validTime:validTime completion:^(id  _Nullable cacheData) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (cacheData) {
-                cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData]) : nil;
+                cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData], [CustomNetWorkOriginalObject originalDataWithResponse:cacheData]) : nil;
             }
-            [strongSelf dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-                if (respObj.requestSuccess) {
-                    [CustomNetWorkCache setRespCacheWithData:respObj.originalData URL:URLString parameters:parameters validTime:validTime];
+            [strongSelf dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj) {
+                if (originalObj.requestSuccess) {
+                    [CustomNetWorkCache setRespCacheWithData:originalObj.data URL:URLString parameters:parameters validTime:validTime];
                 }
                 if (!cacheData) {
-                    respComp ? respComp(respObj) : nil;
+                    respComp ? respComp(respObj, originalObj) : nil;
                 }
             }];
         }];
@@ -152,26 +152,29 @@
         [CustomNetWorkCache getRespCacheWithURL:URLString parameters:parameters validTime:validTime completion:^(id  _Nullable cacheData) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (cacheData) {
-                cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData]) : nil;
+                cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData], [CustomNetWorkOriginalObject originalDataWithResponse:cacheData]) : nil;
             }else {
-                [strongSelf dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-                    if (respObj.requestSuccess) {
-                        [CustomNetWorkCache setRespCacheWithData:respObj.originalData URL:URLString parameters:parameters validTime:validTime];
+                [strongSelf dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj) {
+                    if (originalObj.requestSuccess) {
+                        [CustomNetWorkCache setRespCacheWithData:originalObj.data URL:URLString parameters:parameters validTime:validTime];
                     }
-                    respComp ? respComp(respObj) : nil;
+                    respComp ? respComp(respObj, originalObj) : nil;
                 }];
             }
         }];
         
     }else if (cachePolicy == CachePolicyMainRequestFailCache) {
         //主要返回网络请求数据，请求失败或请求超时的情况下再返回请求成功时缓存的数据
-        [self dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-            if (respObj.requestSuccess) {
-                [CustomNetWorkCache setRespCacheWithData:respObj.originalData URL:URLString parameters:parameters validTime:validTime];
-                respComp ? respComp(respObj) : nil;
+        [self dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj) {
+            if (originalObj.requestSuccess) {
+                [CustomNetWorkCache setRespCacheWithData:originalObj.data URL:URLString parameters:parameters validTime:validTime];
+                respComp ? respComp(respObj, originalObj) : nil;
             }else {
                 [CustomNetWorkCache getRespCacheWithURL:URLString parameters:parameters validTime:validTime completion:^(id  _Nullable cacheData) {
-                    cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData]) : nil;
+                    cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData], [CustomNetWorkOriginalObject originalDataWithResponse:cacheData]) : nil;
+                    if (!cacheData) {//请求失败并没有数据缓存的情况下返回请求失败信息
+                        respComp ? respComp(respObj, originalObj) : nil;
+                    }
                 }];
             }
         }];
@@ -179,14 +182,14 @@
     }else if (cachePolicy == CachePolicyRequsetAndCache) {
         //网络请求数据和缓存数据共同返回
         [CustomNetWorkCache getRespCacheWithURL:URLString parameters:parameters validTime:validTime completion:^(id  _Nullable cacheData) {
-            cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData]) : nil;
+            cacheComp ? cacheComp([CustomNetWorkResponseObject createDataWithResponse:cacheData], [CustomNetWorkOriginalObject originalDataWithResponse:cacheData]) : nil;
         }];
         
-        [self dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj) {
-            if (respObj.requestSuccess) {
-                [CustomNetWorkCache setRespCacheWithData:respObj.originalData URL:URLString parameters:parameters validTime:validTime];
+        [self dataTaskWithRequestMethod:method URL:URLString parameters:parameters completion:^(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj) {
+            if (originalObj.requestSuccess) {
+                [CustomNetWorkCache setRespCacheWithData:originalObj.data URL:URLString parameters:parameters validTime:validTime];
             }
-            respComp ? respComp(respObj) : nil;
+            respComp ? respComp(respObj, originalObj) : nil;
         }];
     }
 }
@@ -208,12 +211,12 @@
             [CustomNetWorkRequestLog disposeError:error sessionTask:dataTask];
             [CustomNetWorkRequestLog logWithSessionTask:dataTask responseObj:nil error:error];
             
-            respComp ? respComp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
+            respComp ? respComp([CustomNetWorkResponseObject createErrorDataWithError:error], [CustomNetWorkOriginalObject originalErrorDataWithError:error]) : nil;
             
         }else {
             [CustomNetWorkRequestLog logWithSessionTask:dataTask responseObj:responseObject error:nil];
             
-            respComp ? respComp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
+            respComp ? respComp([CustomNetWorkResponseObject createDataWithResponse:responseObject], [CustomNetWorkOriginalObject originalDataWithResponse:responseObject]) : nil;
         }
         
     }];
@@ -251,7 +254,7 @@
         [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name ? name : @"file" error:&error];
         if (error) {
             [CustomNetWorkRequestLog logWithSessionTask:nil responseObj:nil error:error];
-            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
+            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error], [CustomNetWorkOriginalObject originalErrorDataWithError:error]) : nil;
         }
         
     } progress:progress completion:comp];
@@ -287,12 +290,12 @@
             [CustomNetWorkRequestLog disposeError:error sessionTask:task];
             [CustomNetWorkRequestLog logWithSessionTask:task responseObj:nil error:error];
             
-            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error]) : nil;
+            comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error], [CustomNetWorkOriginalObject originalErrorDataWithError:error]) : nil;
             
         }else {
             [CustomNetWorkRequestLog logWithSessionTask:task responseObj:responseObject error:nil];
             
-            comp ? comp([CustomNetWorkResponseObject createDataWithResponse:responseObject]) : nil;
+            comp ? comp([CustomNetWorkResponseObject createDataWithResponse:responseObject], [CustomNetWorkOriginalObject originalDataWithResponse:responseObject]) : nil;
         }
         
     }];

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04520EDF2535603C00A818E2 /* CustomNetWorkOriginalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 04520EDE2535603C00A818E2 /* CustomNetWorkOriginalObject.m */; };
 		045F531724C97347005F29ED /* NSArray+LXY.m in Sources */ = {isa = PBXBuildFile; fileRef = 045F531324C97347005F29ED /* NSArray+LXY.m */; };
 		045F531824C97347005F29ED /* NSDictionary+LXY.m in Sources */ = {isa = PBXBuildFile; fileRef = 045F531524C97347005F29ED /* NSDictionary+LXY.m */; };
 		6CAA7D78A8C3CE857E1495EB /* libPods-CustomNetWorking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6803837A2EA3A64FCA0B8CB /* libPods-CustomNetWorking.a */; };
@@ -31,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04520EDD2535603C00A818E2 /* CustomNetWorkOriginalObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomNetWorkOriginalObject.h; sourceTree = "<group>"; };
+		04520EDE2535603C00A818E2 /* CustomNetWorkOriginalObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomNetWorkOriginalObject.m; sourceTree = "<group>"; };
 		045903FE24B821E8000FF58C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		045F531324C97347005F29ED /* NSArray+LXY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+LXY.m"; sourceTree = "<group>"; };
 		045F531424C97347005F29ED /* NSArray+LXY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LXY.h"; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 				F19DBF3824A5A6BF00DC83E7 /* CustomNetWorkRequestLog.m */,
 				F19DBF3424A5A67B00DC83E7 /* CustomNetWorkResponseObject.h */,
 				F19DBF3524A5A67B00DC83E7 /* CustomNetWorkResponseObject.m */,
+				04520EDD2535603C00A818E2 /* CustomNetWorkOriginalObject.h */,
+				04520EDE2535603C00A818E2 /* CustomNetWorkOriginalObject.m */,
 				F156D4C924A70DCA009AF8B6 /* CustomNetWorkConfig.h */,
 				F156D4CA24A70DCA009AF8B6 /* CustomNetWorkConfig.m */,
 				F19DBF3D24A5A73B00DC83E7 /* CustomNetWorkManager.h */,
@@ -304,6 +309,7 @@
 				F156D4BE24A706A2009AF8B6 /* CustomNetWorkRequestLog+LogDecode.m in Sources */,
 				F19DBF2A24A5A1E900DC83E7 /* main.m in Sources */,
 				F156D4BB24A7067A009AF8B6 /* CustomNetWorkResponseObject+RespDecode.m in Sources */,
+				04520EDF2535603C00A818E2 /* CustomNetWorkOriginalObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

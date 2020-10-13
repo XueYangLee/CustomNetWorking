@@ -16,6 +16,8 @@
     dispatch_once(&onceToken, ^{//保证方法替换只被执行一次
 
         [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(logWithSessionTask:responseObj:error:) swizzleNewSEL:@selector(swizzle_logWithSessionTask:responseObj:error:)];
+        
+//        [CustomNetWorkRequestLog swizzleClassMethodWithOriginalSEL:@selector(disposeError:sessionTask:) swizzleNewSEL:@selector(swizzle_disposeError:sessionTask:)];
     });
 }
 
@@ -26,6 +28,14 @@
     }else{
         DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
     }
+}
+
+
++ (void)swizzle_disposeError:(NSError *)error sessionTask:(NSURLSessionTask *)sessionTask{
+    NSHTTPURLResponse *responseObj = (NSHTTPURLResponse *)sessionTask.response;
+    NSInteger statusCode = responseObj.statusCode;
+    NSInteger errorCode = error.code;
+    DLog(@"****%ld*statusCode*\n****%ld*errorCode*",statusCode,errorCode)
 }
 
 

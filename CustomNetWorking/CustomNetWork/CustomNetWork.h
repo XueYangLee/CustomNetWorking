@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 #import "CustomNetWorkManager.h"
 #import "CustomNetWorkResponseObject.h"
+#import "CustomNetWorkOriginalObject.h"
 #import "CustomNetWorkCache.h"
 #import "CustomNetWorkRequestLog.h"
 
@@ -66,13 +67,13 @@ typedef NS_ENUM(NSUInteger, CustomNetWorkCachePolicy) {
 typedef void(^CustomNetWorkStatusBlock)(CustomNetWorkNetStatus netWorkStatus);
 
 /** 网络数据结果block返回 */
-typedef void(^CustomNetWorkRespComp)(CustomNetWorkResponseObject * _Nullable respObj);
+typedef void(^CustomNetWorkRespComp)(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj);
 
 /** 缓存数据结果block返回 */
-typedef void(^CustomNetWorkCacheComp)(CustomNetWorkResponseObject * _Nullable respObj);
+typedef void(^CustomNetWorkCacheComp)(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj);
 
 /** 网络数据及缓存数据结果block返回 */
-typedef void(^CustomNetWorkResultComp)(CustomNetWorkResponseObject * _Nullable respObj);
+typedef void(^CustomNetWorkResultComp)(CustomNetWorkResponseObject * _Nullable respObj, CustomNetWorkOriginalObject * _Nullable originalObj);
 
 /** 数据下载或上传进度及比例 */
 typedef void(^CustomNetWorkProgress)(NSProgress * _Nonnull progress, double progressRate);
