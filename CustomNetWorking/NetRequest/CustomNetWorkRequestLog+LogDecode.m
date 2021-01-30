@@ -24,9 +24,9 @@
 
 + (void)swizzle_logWithSessionTask:(NSURLSessionTask *)sessionTask responseObj:(id)responseObj error:(NSError *)error{
     if (error) {
-        DLog(@"**********请求失败:\nURL:%@\nHeader:%@\nError:\n%@\n*********ERROR*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,error.description);
+        DLog(@"**********请求失败:\nURL:%@\nMethod:%@\nParams:%@\nHeader:%@\nError:\n%@\n*********ERROR*", sessionTask.currentRequest.URL,sessionTask.currentRequest.HTTPMethod,[[NSString alloc]initWithData:sessionTask.originalRequest.HTTPBody encoding:NSUTF8StringEncoding],sessionTask.currentRequest.allHTTPHeaderFields,error.description);
     }else{
-        DLog(@"**********请求成功:\nURL:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
+        DLog(@"**********请求成功:\nURL:%@\nMethod:%@\nParams:%@\nHeader:%@\nResponseObj:\n%@\n*********SUCCESS*", sessionTask.currentRequest.URL,sessionTask.currentRequest.HTTPMethod,[[NSString alloc]initWithData:sessionTask.originalRequest.HTTPBody encoding:NSUTF8StringEncoding],sessionTask.currentRequest.allHTTPHeaderFields,responseObj);
     }
 }
 
