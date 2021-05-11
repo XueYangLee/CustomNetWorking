@@ -323,7 +323,7 @@
         return nil;
     }
     BOOL folderExist = [fileManager fileExistsAtPath:downloadDirectory];
-    if (folderExist) {
+    if (!folderExist) {
         [fileManager createDirectoryAtPath:downloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];//创建Download目录
     }
     
