@@ -187,6 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  图片上传
  
+ @param method 上传请求方式
  @param URLString 上传URL
  @param parameters 上传参数
  @param images 图片数组
@@ -197,11 +198,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param progress 上传进度
  @param comp 上传结果
  */
-+ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
 /**
  文件上传 根据文件路径 filePath
  
+ @param method 上传请求方式
  @param URLString 上传URL
  @param parameters 上传参数
  @param name 文件对应服务器上的字段 不传默认file
@@ -209,11 +211,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param progress 上传进度
  @param comp 上传结果
  */
-+ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
++ (NSURLSessionDataTask *_Nullable)uploadFileWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
 /**
  文件上传 根据文件资源data fileData
  
+ @param method 上传请求方式
  @param URLString 上传URL
  @param parameters 上传参数
  @param name 文件对应服务器上的字段 不传默认file
@@ -223,18 +226,19 @@ NS_ASSUME_NONNULL_BEGIN
  @param progress 上传进度
  @param comp 上传结果
  */
-+ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
++ (NSURLSessionDataTask *_Nullable)uploadFileWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
 /**
  数据资源上传 （核心方法）
  
+ @param method 上传请求方式
  @param URLString 上传URL
  @param parameters 上传参数
  @param formData 上传资源回调
  @param progress 上传进度
  @param comp 上传结果
  */
-+ (NSURLSessionDataTask *_Nullable)uploadWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
++ (NSURLSessionDataTask *_Nullable)uploadWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp;
 
 
 

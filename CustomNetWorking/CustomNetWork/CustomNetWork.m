@@ -227,7 +227,7 @@
 
 
 #pragma mark - 图片上传
-+ (NSURLSessionDataTask *_Nullable)uploadImagesWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
++ (NSURLSessionDataTask *_Nullable)uploadImagesWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters images:(NSArray <UIImage *>*_Nullable)images imageScale:(CGFloat)imageScale imageFileName:(NSString *_Nullable)imageFileName name:(NSString *_Nullable)name imageType:(NSString *_Nullable)imageType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     
     if (imageScale == 0 || imageScale > 1) {
         imageScale = 1.0;
@@ -238,7 +238,7 @@
         NSString *dateString = [formatter stringFromDate:[NSDate date]];
         imageFileName = dateString;
     }
-    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
+    return [self uploadWithMethod:method URL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(obj, imageScale);
             [formData appendPartWithFileData:imageData name:name? name : @"file" fileName:[NSString stringWithFormat:@"%@%lu.%@", imageFileName, (unsigned long)idx, imageType ? imageType : @"jpg"] mimeType:[NSString stringWithFormat:@"image/%@", imageType ? imageType : @"jpeg"]];
@@ -248,8 +248,9 @@
 }
 
 #pragma mark - 文件上传 filePath
-+ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
-    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
++ (NSURLSessionDataTask *_Nullable)uploadFileWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name filePath:(NSString *_Nonnull)filePath progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    
+    return [self uploadWithMethod:method URL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSError *error = nil;
         [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name ? name : @"file" error:&error];
         if (error) {
@@ -261,22 +262,23 @@
 }
 
 #pragma mark - 文件上传 fileData
-+ (NSURLSessionDataTask *_Nullable)uploadFileWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
-    return [self uploadWithURL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
++ (NSURLSessionDataTask *_Nullable)uploadFileWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters name:(NSString *_Nullable)name fileData:(NSData *_Nonnull)fileData fileName:(NSString *_Nonnull)fileName mimeType:(NSString *_Nullable)mimeType progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
+    
+    return [self uploadWithMethod:method URL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:fileData name:name ? name : @"file" fileName:fileName mimeType:mimeType ? mimeType : @"form-data"];
         
     } progress:progress completion:comp];
 }
 
 #pragma mark - 数据资源上传 核心方法⚠️
-+ (NSURLSessionDataTask *_Nullable)uploadWithURL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
++ (NSURLSessionDataTask *_Nullable)uploadWithMethod:(CustomNetWorkRequestMethod)method URL:(NSString *_Nullable)URLString parameters:(NSDictionary *_Nullable)parameters constructingBody:(CustomNetWorkUploadFormData _Nullable )formData progress:(CustomNetWorkProgress _Nullable )progress completion:(CustomNetWorkRespComp _Nullable )comp {
     
     if (!URLString) {
         URLString = @"";
     }
     parameters = [self disposePublicParameters:parameters];//公共参数添加
     
-    NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:parameters constructingBodyWithBlock:formData error:nil];
+    NSMutableURLRequest *request = [[CustomNetWorkManager sharedManager].sessionManager.requestSerializer multipartFormRequestWithMethod:[self requestTypeWithMethod:method] URLString:URLString parameters:parameters constructingBodyWithBlock:formData error:nil];
     
     [self disposeRequestMutableHeaderField:request];//可变请求头添加
     
