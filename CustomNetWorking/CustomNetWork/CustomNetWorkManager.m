@@ -7,7 +7,7 @@
 //
 
 #import "CustomNetWorkManager.h"
-#import "AFNetworkActivityIndicatorManager.h"
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 @implementation CustomNetWorkManager
 
