@@ -252,7 +252,7 @@
     
     return [self uploadWithMethod:method URL:URLString parameters:parameters constructingBody:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSError *error = nil;
-        [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:name ? name : @"file" error:&error];
+        [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:name ? name : @"file" error:&error];
         if (error) {
             [CustomNetWorkRequestLog logWithSessionTask:nil responseObj:nil error:error];
             comp ? comp([CustomNetWorkResponseObject createErrorDataWithError:error], [CustomNetWorkOriginalObject originalErrorDataWithError:error]) : nil;
