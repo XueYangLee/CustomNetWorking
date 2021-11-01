@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "CustomNetWorking"
-  spec.version      = "1.2.2"
+  spec.version      = "1.2.3"
   spec.summary      = "基于AFNetWorking二次封装（数据请求、数据缓存、数据文件上传、数据文件下载、数据文件断点下载、自定义配置）"
   spec.homepage     = "https://github.com/XueYangLee/CustomNetWorking"
   spec.license      = "MIT"
