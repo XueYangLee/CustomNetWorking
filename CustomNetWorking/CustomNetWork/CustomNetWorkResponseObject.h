@@ -37,6 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 /** 时间戳  [参数的使用由后台数据是否返回决定] */
 @property (nonatomic,assign) long long timestamp;
 
+/** 时间戳  [参数的使用由后台数据是否返回决定] */
+@property (nonatomic,assign) long long timeStamp;
+
+/** 时间戳  [参数的使用由后台数据是否返回决定] */
+@property (nonatomic,assign) long long time;
+
 /** 时间信息  [参数的使用由后台数据是否返回决定] */
 @property (nonatomic,strong) NSString *date;
 
